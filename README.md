@@ -150,8 +150,8 @@ open-rtl verify plan ./examples/rtl ./examples/tb
 
 ### Phase 0: Project Bootstrap
 
-- [ ] Define project structure
-- [ ] Add example RTL/TB projects
+- [x] Define project structure
+- [x] Add example RTL/TB projects
 - [ ] Add Graphify-based analysis workflow
 - [ ] Document experiment process
 
@@ -205,6 +205,11 @@ Apache License 2.0
 ## Project Status
 
 Early concept stage.
+
+Current repository assets:
+
+- `examples/rtl/counter.sv`: small DUT for graph extraction experiments
+- `examples/tb/tb_counter.sv`: matching SystemVerilog testbench skeleton
 
 Focus:
 
