@@ -6,7 +6,7 @@
 
 Open RTL Verification is an open-source framework for exploring how AI agents can assist, automate, and improve RTL verification workflows.
 
-The project focuses on Verilog/SystemVerilog RTL and testbench analysis, starting with graph-based code understanding using Graphify. The long-term goal is to build an agentic verification framework that can analyze RTL, understand testbenches, generate verification plans, suggest assertions, create tests, run simulations, and summarize coverage gaps.
+The project focuses on Verilog/SystemVerilog RTL and testbench analysis, including both lightweight SystemVerilog testbenches and UVM-based verification environments, starting with graph-based code understanding using Graphify. The long-term goal is to build an agentic verification framework that can analyze RTL, understand testbenches, generate verification plans, suggest assertions, create tests, run simulations, and summarize coverage gaps.
 
 ## Goals
 
@@ -17,9 +17,9 @@ Use Graphify to analyze RTL and testbench repositories.
 Initial targets:
 
 - Parse RTL and testbench structure
-- Build a knowledge graph of modules, interfaces, signals, tasks, classes, and dependencies
+- Build a knowledge graph of modules, interfaces, signals, tasks, classes, UVM components, sequences, TLM connections, and dependencies
 - Identify verification-relevant relationships
-- Summarize DUT and TB architecture
+- Summarize DUT, TB, and UVM environment architecture
 - Help engineers understand unfamiliar RTL/TB codebases faster
 
 ### Long-term Goal
@@ -30,10 +30,11 @@ The framework should eventually support:
 
 - RTL design understanding
 - Testbench structure analysis
+- UVM environment and sequence analysis
 - Verification plan generation
 - Assertion suggestion
 - Test scenario generation
-- Coverage gap analysis
+- Functional coverage gap analysis
 - Regression result summarization
 - Bug hypothesis generation
 - Debug assistance from logs, waveforms, traces, and failing seeds
@@ -47,8 +48,9 @@ Modern AI agents can help with:
 - Codebase exploration
 - Design intent extraction
 - Verification checklist generation
-- Testbench review
+- Testbench and UVM environment review
 - Assertion and coverage suggestion
+- Sequence and stimulus review
 - Debug log summarization
 - Regression triage
 
@@ -58,6 +60,7 @@ However, RTL verification has strict correctness requirements. This project is n
 
 - 100% open source
 - Verilog/SystemVerilog-first
+- UVM-aware verification workflow
 - Compatible with open-source RTL projects
 - Toolchain-friendly
 - Human-in-the-loop by default
@@ -80,19 +83,19 @@ However, RTL verification has strict correctness requirements. This project is n
 The first milestone focuses on static analysis.
 
 ```
-RTL / TB source
-      |
-      v
-Graphify analysis
-      |
-      v
+RTL / SV TB / UVM source
+         |
+         v
+   Graphify analysis
+         |
+         v
 Design + verification knowledge graph
-      |
-      v
+         |
+         v
 AI-agent assisted review
-      |
-      v
-Verification insights
+         |
+         v
+ Verification insights
 ```
 
 ## Planned Architecture
@@ -101,13 +104,15 @@ Verification insights
 open-rtl-verification/
 ├── examples/
 │   ├── rtl/
-│   └── tb/
+│   ├── tb/
+│   └── uvm_tb/
 ├── graph/
 │   ├── graphify_outputs/
 │   └── queries/
 ├── agents/
 │   ├── rtl_analyzer/
 │   ├── tb_analyzer/
+│   ├── uvm_analyzer/
 │   ├── verification_planner/
 │   └── regression_summarizer/
 ├── scripts/
@@ -122,6 +127,7 @@ open-rtl-verification/
 - Verilator
 - Icarus Verilog
 - cocotb
+- UVM (with simulator support where applicable)
 - SymbiYosys
 - Yosys
 - Surelog/UHDM
@@ -140,7 +146,13 @@ open-rtl verify analyze-rtl ./examples/rtl
 open-rtl verify analyze-tb ./examples/tb
 ```
 
-### 3. Verification Plan Draft
+### 3. UVM Environment Analysis
+
+```bash
+open-rtl verify analyze-uvm ./examples/uvm_tb
+```
+
+### 4. Verification Plan Draft
 
 ```bash
 open-rtl verify plan ./examples/rtl ./examples/tb
@@ -152,6 +164,7 @@ open-rtl verify plan ./examples/rtl ./examples/tb
 
 - [x] Define project structure
 - [x] Add example RTL/TB projects
+- [ ] Add example UVM environment
 - [ ] Add Graphify-based analysis workflow
 - [ ] Document experiment process
 
@@ -160,6 +173,7 @@ open-rtl verify plan ./examples/rtl ./examples/tb
 - [ ] Generate repository knowledge graph
 - [ ] Extract RTL module hierarchy
 - [ ] Extract TB component relationships
+- [ ] Extract UVM component hierarchy, factory usage, and sequence flow
 - [ ] Add graph query examples
 - [ ] Generate human-readable summaries
 
@@ -167,6 +181,7 @@ open-rtl verify plan ./examples/rtl ./examples/tb
 
 - [ ] Generate verification plan drafts
 - [ ] Suggest directed tests
+- [ ] Suggest UVM sequence scenarios
 - [ ] Suggest assertions
 - [ ] Suggest functional coverage points
 
@@ -175,6 +190,7 @@ open-rtl verify plan ./examples/rtl ./examples/tb
 - [ ] Integrate Verilator
 - [ ] Integrate Icarus Verilog
 - [ ] Integrate cocotb
+- [ ] Define UVM-capable simulation flow
 - [ ] Add regression runner
 
 ### Phase 4: Debug and Regression Triage
@@ -193,6 +209,7 @@ open-rtl verify plan ./examples/rtl ./examples/tb
 
 - RTL structure understanding accuracy
 - Testbench understanding accuracy
+- UVM environment understanding accuracy
 - Verification plan usefulness
 - Assertion quality
 - Coverage gap detection
@@ -210,7 +227,8 @@ Current repository assets:
 
 - `examples/rtl/counter.sv`: small DUT for graph extraction experiments
 - `examples/tb/tb_counter.sv`: matching SystemVerilog testbench skeleton
+- Planned: `examples/uvm_tb/`: minimal UVM environment for structure and sequence analysis experiments
 
 Focus:
 
-Analyze RTL and testbench repositories with Graphify and convert results into verification insights.
+Analyze RTL, testbench, and UVM repositories with Graphify and convert results into verification insights.
