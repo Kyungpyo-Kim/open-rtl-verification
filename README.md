@@ -250,7 +250,7 @@ This keeps reuse, upgrades, and regression stability manageable.
 
 - [x] Define project structure
 - [x] Add example RTL/TB projects
-- [ ] Add example UVM environment
+- [x] Add example UVM environment
 - [ ] Add Graphify-based analysis workflow
 - [ ] Document experiment process
 - [ ] Define documentation for safe AI adoption boundaries
@@ -326,7 +326,7 @@ Current repository assets:
 
 - `examples/rtl/counter.sv`: small DUT for graph extraction experiments
 - `examples/tb/tb_counter.sv`: matching SystemVerilog testbench skeleton
-- Planned: `examples/uvm_tb/`: minimal UVM environment for structure, sequence, and integration analysis experiments
+- `examples/uvm_tb/`: minimal UVM environment for structure, sequence, analysis-port connectivity, and virtual-interface binding experiments
 
 Focus:
 
