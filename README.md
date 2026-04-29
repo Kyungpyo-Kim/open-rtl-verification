@@ -167,7 +167,13 @@ open-rtl-verification/
 ### 1. RTL Structure Analysis
 
 ```bash
-open-rtl verify analyze-rtl ./examples/rtl
+python3 scripts/run_graphify.py examples/rtl --manifest-only
+```
+
+When Graphify is installed, the same entrypoint can invoke it directly:
+
+```bash
+python3 scripts/run_graphify.py examples/rtl
 ```
 
 ### 2. Testbench Analysis
@@ -251,7 +257,7 @@ This keeps reuse, upgrades, and regression stability manageable.
 - [x] Define project structure
 - [x] Add example RTL/TB projects
 - [x] Add example UVM environment
-- [ ] Add Graphify-based analysis workflow
+- [x] Add Graphify-based analysis workflow
 - [ ] Document experiment process
 - [ ] Define documentation for safe AI adoption boundaries
 - [ ] Add minimal VIP integration review checklist
@@ -327,6 +333,8 @@ Current repository assets:
 - `examples/rtl/counter.sv`: small DUT for graph extraction experiments
 - `examples/tb/tb_counter.sv`: matching SystemVerilog testbench skeleton
 - `examples/uvm_tb/`: minimal UVM environment for structure, sequence, analysis-port connectivity, and virtual-interface binding experiments
+- `scripts/run_graphify.py`: reproducible source collector and optional Graphify runner
+- `docs/graphify-workflow.md`: usage notes for the first analysis workflow
 
 Focus:
 
