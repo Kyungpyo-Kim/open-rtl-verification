@@ -176,6 +176,24 @@ When Graphify is installed, the same entrypoint can invoke it directly:
 python3 scripts/run_graphify.py examples/rtl
 ```
 
+The workflow now also supports:
+
+- public git repo staging for open RTL / UVM targets
+- sparse checkout for large repositories
+- filelist-aware source selection
+- generated `summary.json` and Markdown Mermaid visualization alongside `sources.json`
+
+Example, larger open RTL target:
+
+```bash
+python3 scripts/run_graphify.py \
+  https://github.com/lowRISC/ibex.git \
+  --repo-ref master \
+  --sparse-path rtl \
+  --output-dir graph/graphify_outputs/ibex_rtl \
+  --manifest-only
+```
+
 ### 2. Testbench Analysis
 
 ```bash
@@ -333,8 +351,10 @@ Current repository assets:
 - `examples/rtl/counter.sv`: small DUT for graph extraction experiments
 - `examples/tb/tb_counter.sv`: matching SystemVerilog testbench skeleton
 - `examples/uvm_tb/`: minimal UVM environment for structure, sequence, analysis-port connectivity, and virtual-interface binding experiments
-- `scripts/run_graphify.py`: reproducible source collector and optional Graphify runner
-- `docs/graphify-workflow.md`: usage notes for the first analysis workflow
+- `scripts/run_graphify.py`: Graphify entrypoint with repo staging, sparse checkout, filelist support, manifest generation, heuristic summary, and Markdown visualization
+- `configs/open_targets.json`: reusable open-source target presets for larger RTL/UVM analysis
+- `docs/graphify-workflow.md`: workflow usage notes
+- `docs/graphify-open-targets.md`: larger open-target results and visualization examples
 
 Focus:
 
@@ -346,3 +366,10 @@ Near-term emphasis:
 - Surface integration risks before simulation debug burns time
 - Review CSR / register-driven verification intent against implementation artifacts
 - Keep AI outputs reviewable, bounded, and traceable
+
+Recent Graphify application summary:
+
+- validated on local UVM example with Mermaid graph output
+- applied to `lowRISC/ibex` RTL hierarchy
+- applied to `lowRISC/opentitan` UART DV slice plus shared UVM infrastructure
+- kept README concise, with detailed results moved to `docs/graphify-open-targets.md`

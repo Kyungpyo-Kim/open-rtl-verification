@@ -1,0 +1,1546 @@
+{
+  "stats": {
+    "file_count": 30,
+    "uvm_file_count": 0,
+    "entity_counts": {
+      "module": 28,
+      "package": 2
+    },
+    "edge_count": 75
+  },
+  "entities": [
+    {
+      "kind": "module",
+      "name": "ibex_alu",
+      "file": "rtl/ibex_alu.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_branch_predict",
+      "file": "rtl/ibex_branch_predict.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_compressed_decoder",
+      "file": "rtl/ibex_compressed_decoder.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_controller",
+      "file": "rtl/ibex_controller.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_core",
+      "file": "rtl/ibex_core.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_counter",
+      "file": "rtl/ibex_counter.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_cs_registers",
+      "file": "rtl/ibex_cs_registers.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_csr",
+      "file": "rtl/ibex_csr.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_decoder",
+      "file": "rtl/ibex_decoder.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_dummy_instr",
+      "file": "rtl/ibex_dummy_instr.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_ex_block",
+      "file": "rtl/ibex_ex_block.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_fetch_fifo",
+      "file": "rtl/ibex_fetch_fifo.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_icache",
+      "file": "rtl/ibex_icache.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_id_stage",
+      "file": "rtl/ibex_id_stage.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_if_stage",
+      "file": "rtl/ibex_if_stage.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_load_store_unit",
+      "file": "rtl/ibex_load_store_unit.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_lockstep",
+      "file": "rtl/ibex_lockstep.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_multdiv_fast",
+      "file": "rtl/ibex_multdiv_fast.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_multdiv_slow",
+      "file": "rtl/ibex_multdiv_slow.sv",
+      "extends": null
+    },
+    {
+      "kind": "package",
+      "name": "ibex_pkg",
+      "file": "rtl/ibex_pkg.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_pmp",
+      "file": "rtl/ibex_pmp.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_prefetch_buffer",
+      "file": "rtl/ibex_prefetch_buffer.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_register_file_ff",
+      "file": "rtl/ibex_register_file_ff.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_register_file_fpga",
+      "file": "rtl/ibex_register_file_fpga.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_register_file_latch",
+      "file": "rtl/ibex_register_file_latch.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_top",
+      "file": "rtl/ibex_top.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_top_tracing",
+      "file": "rtl/ibex_top_tracing.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_tracer",
+      "file": "rtl/ibex_tracer.sv",
+      "extends": null
+    },
+    {
+      "kind": "package",
+      "name": "ibex_tracer_pkg",
+      "file": "rtl/ibex_tracer_pkg.sv",
+      "extends": null
+    },
+    {
+      "kind": "module",
+      "name": "ibex_wb_stage",
+      "file": "rtl/ibex_wb_stage.sv",
+      "extends": null
+    }
+  ],
+  "edges": [
+    {
+      "from": "rtl/ibex_alu.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_branch_predict.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_compressed_decoder.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_controller.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "prim_buf",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_if_stage",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_id_stage",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_ex_block",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_load_store_unit",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_wb_stage",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "prim_secded_inv_39_32_enc",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "prim_secded_inv_39_32_dec",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_cs_registers",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_pmp",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_core.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_cs_registers.sv",
+      "to": "ibex_csr",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_cs_registers.sv",
+      "to": "ibex_counter",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_cs_registers.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_decoder.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_dummy_instr.sv",
+      "to": "prim_lfsr",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_dummy_instr.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_ex_block.sv",
+      "to": "ibex_alu",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_ex_block.sv",
+      "to": "ibex_multdiv_slow",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_ex_block.sv",
+      "to": "ibex_multdiv_fast",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_ex_block.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_icache.sv",
+      "to": "prim_secded_inv_28_22_enc",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_icache.sv",
+      "to": "prim_secded_inv_39_32_enc",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_icache.sv",
+      "to": "prim_secded_inv_28_22_dec",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_icache.sv",
+      "to": "prim_secded_inv_39_32_dec",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_icache.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_id_stage.sv",
+      "to": "ibex_decoder",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_id_stage.sv",
+      "to": "ibex_controller",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_id_stage.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "prim_buf",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "prim_secded_inv_39_32_dec",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "ibex_icache",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "ibex_prefetch_buffer",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "ibex_compressed_decoder",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "ibex_dummy_instr",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "ibex_branch_predict",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_if_stage.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_load_store_unit.sv",
+      "to": "prim_buf",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_load_store_unit.sv",
+      "to": "prim_secded_inv_39_32_dec",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_load_store_unit.sv",
+      "to": "prim_secded_inv_39_32_enc",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "prim_count",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "prim_flop",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "prim_clock_mux2",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "ibex_core",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "ibex_register_file_ff",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "ibex_register_file_fpga",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "ibex_register_file_latch",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_lockstep.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_multdiv_fast.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_multdiv_slow.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_pmp.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_prefetch_buffer.sv",
+      "to": "ibex_fetch_fifo",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_register_file_latch.sv",
+      "to": "prim_clock_gating",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "prim_flop",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "prim_clock_gating",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "prim_buf",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "ibex_core",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "ibex_register_file_ff",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "ibex_register_file_fpga",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "ibex_register_file_latch",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "prim_ram_1p_scr",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "prim_ram_1p",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "ibex_lockstep",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "prim_secded_inv_39_32_dec",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_top_tracing.sv",
+      "to": "ibex_top",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top_tracing.sv",
+      "to": "ibex_tracer",
+      "type": "instantiates"
+    },
+    {
+      "from": "rtl/ibex_top_tracing.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_tracer.sv",
+      "to": "ibex_tracer_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_tracer_pkg.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "rtl/ibex_wb_stage.sv",
+      "to": "ibex_pkg::*",
+      "type": "imports"
+    }
+  ],
+  "files": [
+    {
+      "file": "rtl/ibex_alu.sv",
+      "line_count": 1400,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_alu"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": [
+        "_N"
+      ]
+    },
+    {
+      "file": "rtl/ibex_branch_predict.sv",
+      "line_count": 100,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_branch_predict"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_compressed_decoder.sv",
+      "line_count": 847,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_compressed_decoder"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_controller.sv",
+      "line_count": 944,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_controller"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_core.sv",
+      "line_count": 2023,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_core"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "prim_buf",
+          "instance": "u_fetch_enable_buf"
+        },
+        {
+          "type": "ibex_if_stage",
+          "instance": "if_stage_i"
+        },
+        {
+          "type": "ibex_id_stage",
+          "instance": "id_stage_i"
+        },
+        {
+          "type": "ibex_ex_block",
+          "instance": "ex_block_i"
+        },
+        {
+          "type": "ibex_load_store_unit",
+          "instance": "load_store_unit_i"
+        },
+        {
+          "type": "ibex_wb_stage",
+          "instance": "wb_stage_i"
+        },
+        {
+          "type": "prim_secded_inv_39_32_enc",
+          "instance": "regfile_ecc_enc"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "regfile_ecc_dec_a"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "regfile_ecc_dec_b"
+        },
+        {
+          "type": "ibex_cs_registers",
+          "instance": "cs_registers_i"
+        },
+        {
+          "type": "ibex_pmp",
+          "instance": "pmp_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": [
+        "RVFI"
+      ]
+    },
+    {
+      "file": "rtl/ibex_counter.sv",
+      "line_count": 111,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_counter"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_cs_registers.sv",
+      "line_count": 1682,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_cs_registers"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "ibex_csr",
+          "instance": "u_mstatus_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mepc_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mie_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mscratch_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mcause_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mtval_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mtvec_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_dcsr_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_depc_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_dscratch0_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_dscratch1_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mstack_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mstack_epc_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_mstack_cause_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_pmp_cfg_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_pmp_addr_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_pmp_mseccfg"
+        },
+        {
+          "type": "ibex_counter",
+          "instance": "mcycle_counter_i"
+        },
+        {
+          "type": "ibex_counter",
+          "instance": "minstret_counter_i"
+        },
+        {
+          "type": "ibex_counter",
+          "instance": "mcounters_variable_i"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_tselect_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_tmatch_control_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_tmatch_value_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_cpuctrlsts_ic_scr_key_valid_q_csr"
+        },
+        {
+          "type": "ibex_csr",
+          "instance": "u_cpuctrlsts_part_csr"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_csr.sv",
+      "line_count": 57,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_csr"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_decoder.sv",
+      "line_count": 1212,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_decoder"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_dummy_instr.sv",
+      "line_count": 150,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_dummy_instr"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "prim_lfsr",
+          "instance": "lfsr_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_ex_block.sv",
+      "line_count": 217,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_ex_block"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "ibex_alu",
+          "instance": "alu_i"
+        },
+        {
+          "type": "ibex_multdiv_slow",
+          "instance": "multdiv_i"
+        },
+        {
+          "type": "ibex_multdiv_fast",
+          "instance": "multdiv_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_fetch_fifo.sv",
+      "line_count": 269,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_fetch_fifo"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_icache.sv",
+      "line_count": 1337,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_icache"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "prim_secded_inv_28_22_enc",
+          "instance": "tag_ecc_enc"
+        },
+        {
+          "type": "prim_secded_inv_39_32_enc",
+          "instance": "data_ecc_enc"
+        },
+        {
+          "type": "prim_secded_inv_28_22_dec",
+          "instance": "data_ecc_dec"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "data_ecc_dec"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_id_stage.sv",
+      "line_count": 1156,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_id_stage"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "ibex_decoder",
+          "instance": "decoder_i"
+        },
+        {
+          "type": "ibex_controller",
+          "instance": "controller_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": [
+        "RVFI"
+      ]
+    },
+    {
+      "file": "rtl/ibex_if_stage.sv",
+      "line_count": 839,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_if_stage"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "prim_buf",
+          "instance": "u_prim_buf_instr_rdata"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "u_instr_intg_dec"
+        },
+        {
+          "type": "ibex_icache",
+          "instance": "icache_i"
+        },
+        {
+          "type": "ibex_prefetch_buffer",
+          "instance": "prefetch_buffer_i"
+        },
+        {
+          "type": "ibex_compressed_decoder",
+          "instance": "compressed_decoder_i"
+        },
+        {
+          "type": "ibex_dummy_instr",
+          "instance": "dummy_instr_i"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_prev_instr_addr_incr_buf"
+        },
+        {
+          "type": "ibex_branch_predict",
+          "instance": "branch_predict_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_load_store_unit.sv",
+      "line_count": 624,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_load_store_unit"
+        }
+      ],
+      "imports": [],
+      "instantiations": [
+        {
+          "type": "prim_buf",
+          "instance": "u_prim_buf_instr_rdata"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "u_data_intg_dec"
+        },
+        {
+          "type": "prim_secded_inv_39_32_enc",
+          "instance": "u_data_gen"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_lockstep.sv",
+      "line_count": 670,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_lockstep"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "prim_count",
+          "instance": "u_rst_shadow_cnt"
+        },
+        {
+          "type": "prim_flop",
+          "instance": "u_prim_rst_shadow_set_flop"
+        },
+        {
+          "type": "prim_flop",
+          "instance": "u_prim_enable_cmp_flop"
+        },
+        {
+          "type": "prim_clock_mux2",
+          "instance": "u_prim_rst_shadow_n_mux2"
+        },
+        {
+          "type": "ibex_core",
+          "instance": "u_shadow_core"
+        },
+        {
+          "type": "ibex_register_file_ff",
+          "instance": "register_file_shadow_i"
+        },
+        {
+          "type": "ibex_register_file_fpga",
+          "instance": "register_file_shadow_i"
+        },
+        {
+          "type": "ibex_register_file_latch",
+          "instance": "register_file_shadow_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_multdiv_fast.sv",
+      "line_count": 556,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_multdiv_fast"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": [
+        "OP_H",
+        "OP_L"
+      ]
+    },
+    {
+      "file": "rtl/ibex_multdiv_slow.sv",
+      "line_count": 390,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_multdiv_slow"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_pkg.sv",
+      "line_count": 728,
+      "entities": [
+        {
+          "kind": "package",
+          "name": "ibex_pkg"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_pmp.sv",
+      "line_count": 263,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_pmp"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_prefetch_buffer.sv",
+      "line_count": 264,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_prefetch_buffer"
+        }
+      ],
+      "imports": [],
+      "instantiations": [
+        {
+          "type": "ibex_fetch_fifo",
+          "instance": "fifo_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_register_file_ff.sv",
+      "line_count": 108,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_register_file_ff"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_register_file_fpga.sv",
+      "line_count": 83,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_register_file_fpga"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_register_file_latch.sv",
+      "line_count": 168,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_register_file_latch"
+        }
+      ],
+      "imports": [],
+      "instantiations": [
+        {
+          "type": "prim_clock_gating",
+          "instance": "cg_we_global"
+        },
+        {
+          "type": "prim_clock_gating",
+          "instance": "cg_i"
+        },
+        {
+          "type": "prim_clock_gating",
+          "instance": "cg_i"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_top.sv",
+      "line_count": 1394,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_top"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "prim_flop",
+          "instance": "u_prim_core_busy_flop"
+        },
+        {
+          "type": "prim_clock_gating",
+          "instance": "core_clock_gate_i"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_fetch_enable_buf"
+        },
+        {
+          "type": "ibex_core",
+          "instance": "u_ibex_core"
+        },
+        {
+          "type": "ibex_register_file_ff",
+          "instance": "register_file_i"
+        },
+        {
+          "type": "ibex_register_file_fpga",
+          "instance": "register_file_i"
+        },
+        {
+          "type": "ibex_register_file_latch",
+          "instance": "register_file_i"
+        },
+        {
+          "type": "prim_ram_1p_scr",
+          "instance": "tag_bank"
+        },
+        {
+          "type": "prim_ram_1p_scr",
+          "instance": "data_bank"
+        },
+        {
+          "type": "prim_ram_1p",
+          "instance": "tag_bank"
+        },
+        {
+          "type": "prim_ram_1p",
+          "instance": "data_bank"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_prim_buf_data_wdata_intg"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_signals_prim_buf"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_tag_prim_buf"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_data_prim_buf"
+        },
+        {
+          "type": "ibex_lockstep",
+          "instance": "u_ibex_lockstep"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_prim_buf_alert_minor"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_prim_buf_alert_major_internal"
+        },
+        {
+          "type": "prim_buf",
+          "instance": "u_prim_buf_alert_major_bus"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "u_data_intg_dec"
+        },
+        {
+          "type": "prim_secded_inv_39_32_dec",
+          "instance": "u_instr_intg_dec"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": [
+        "RVFI"
+      ]
+    },
+    {
+      "file": "rtl/ibex_top_tracing.sv",
+      "line_count": 368,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_top_tracing"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "ibex_top",
+          "instance": "u_ibex_top"
+        },
+        {
+          "type": "ibex_tracer",
+          "instance": "u_ibex_tracer"
+        }
+      ],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_tracer.sv",
+      "line_count": 1208,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_tracer"
+        }
+      ],
+      "imports": [
+        "ibex_tracer_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_tracer_pkg.sv",
+      "line_count": 355,
+      "entities": [
+        {
+          "kind": "package",
+          "name": "ibex_tracer_pkg"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "rtl/ibex_wb_stage.sv",
+      "line_count": 252,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "ibex_wb_stage"
+        }
+      ],
+      "imports": [
+        "ibex_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    }
+  ]
+}

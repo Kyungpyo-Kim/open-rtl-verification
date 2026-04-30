@@ -1,0 +1,282 @@
+{
+  "stats": {
+    "file_count": 4,
+    "uvm_file_count": 2,
+    "entity_counts": {
+      "module": 2,
+      "interface": 1,
+      "package": 1,
+      "class": 8
+    },
+    "edge_count": 13
+  },
+  "entities": [
+    {
+      "kind": "module",
+      "name": "counter",
+      "file": "/home/kyungpyo/ws/varuna/project/open-rtl-verification/examples/rtl/counter.sv",
+      "extends": null
+    },
+    {
+      "kind": "interface",
+      "name": "counter_if",
+      "file": "counter_if.sv",
+      "extends": null
+    },
+    {
+      "kind": "package",
+      "name": "tb_counter_pkg",
+      "file": "tb_counter_pkg.sv",
+      "extends": null
+    },
+    {
+      "kind": "class",
+      "name": "counter_item",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_sequence_item"
+    },
+    {
+      "kind": "class",
+      "name": "counter_sequence",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_sequence"
+    },
+    {
+      "kind": "class",
+      "name": "counter_driver",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_driver"
+    },
+    {
+      "kind": "class",
+      "name": "counter_monitor",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_component"
+    },
+    {
+      "kind": "class",
+      "name": "counter_scoreboard",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_subscriber"
+    },
+    {
+      "kind": "class",
+      "name": "counter_agent",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_component"
+    },
+    {
+      "kind": "class",
+      "name": "counter_env",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_component"
+    },
+    {
+      "kind": "class",
+      "name": "counter_test",
+      "file": "tb_counter_pkg.sv",
+      "extends": "uvm_test"
+    },
+    {
+      "kind": "module",
+      "name": "tb_counter_uvm",
+      "file": "tb_counter_uvm.sv",
+      "extends": null
+    }
+  ],
+  "edges": [
+    {
+      "from": "counter_item",
+      "to": "uvm_sequence_item",
+      "type": "extends"
+    },
+    {
+      "from": "counter_sequence",
+      "to": "uvm_sequence",
+      "type": "extends"
+    },
+    {
+      "from": "counter_driver",
+      "to": "uvm_driver",
+      "type": "extends"
+    },
+    {
+      "from": "counter_monitor",
+      "to": "uvm_component",
+      "type": "extends"
+    },
+    {
+      "from": "counter_scoreboard",
+      "to": "uvm_subscriber",
+      "type": "extends"
+    },
+    {
+      "from": "counter_agent",
+      "to": "uvm_component",
+      "type": "extends"
+    },
+    {
+      "from": "counter_env",
+      "to": "uvm_component",
+      "type": "extends"
+    },
+    {
+      "from": "counter_test",
+      "to": "uvm_test",
+      "type": "extends"
+    },
+    {
+      "from": "tb_counter_pkg.sv",
+      "to": "uvm_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "tb_counter_uvm.sv",
+      "to": "counter_if",
+      "type": "instantiates"
+    },
+    {
+      "from": "tb_counter_uvm.sv",
+      "to": "counter",
+      "type": "instantiates"
+    },
+    {
+      "from": "tb_counter_uvm.sv",
+      "to": "uvm_pkg::*",
+      "type": "imports"
+    },
+    {
+      "from": "tb_counter_uvm.sv",
+      "to": "tb_counter_pkg::*",
+      "type": "imports"
+    }
+  ],
+  "files": [
+    {
+      "file": "/home/kyungpyo/ws/varuna/project/open-rtl-verification/examples/rtl/counter.sv",
+      "line_count": 30,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "counter"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "counter_if.sv",
+      "line_count": 6,
+      "entities": [
+        {
+          "kind": "interface",
+          "name": "counter_if"
+        }
+      ],
+      "imports": [],
+      "instantiations": [],
+      "has_uvm": false,
+      "has_run_test": false,
+      "has_config_db": false,
+      "has_virtual_interface": false,
+      "has_analysis_port": false,
+      "defines": []
+    },
+    {
+      "file": "tb_counter_pkg.sv",
+      "line_count": 207,
+      "entities": [
+        {
+          "kind": "package",
+          "name": "tb_counter_pkg"
+        },
+        {
+          "kind": "class",
+          "name": "counter_item",
+          "extends": "uvm_sequence_item"
+        },
+        {
+          "kind": "class",
+          "name": "counter_sequence",
+          "extends": "uvm_sequence"
+        },
+        {
+          "kind": "class",
+          "name": "counter_driver",
+          "extends": "uvm_driver"
+        },
+        {
+          "kind": "class",
+          "name": "counter_monitor",
+          "extends": "uvm_component"
+        },
+        {
+          "kind": "class",
+          "name": "counter_scoreboard",
+          "extends": "uvm_subscriber"
+        },
+        {
+          "kind": "class",
+          "name": "counter_agent",
+          "extends": "uvm_component"
+        },
+        {
+          "kind": "class",
+          "name": "counter_env",
+          "extends": "uvm_component"
+        },
+        {
+          "kind": "class",
+          "name": "counter_test",
+          "extends": "uvm_test"
+        }
+      ],
+      "imports": [
+        "uvm_pkg::*"
+      ],
+      "instantiations": [],
+      "has_uvm": true,
+      "has_run_test": false,
+      "has_config_db": true,
+      "has_virtual_interface": true,
+      "has_analysis_port": true,
+      "defines": []
+    },
+    {
+      "file": "tb_counter_uvm.sv",
+      "line_count": 31,
+      "entities": [
+        {
+          "kind": "module",
+          "name": "tb_counter_uvm"
+        }
+      ],
+      "imports": [
+        "uvm_pkg::*",
+        "tb_counter_pkg::*"
+      ],
+      "instantiations": [
+        {
+          "type": "counter_if",
+          "instance": "cif"
+        },
+        {
+          "type": "counter",
+          "instance": "dut"
+        }
+      ],
+      "has_uvm": true,
+      "has_run_test": true,
+      "has_config_db": true,
+      "has_virtual_interface": true,
+      "has_analysis_port": false,
+      "defines": []
+    }
+  ]
+}
