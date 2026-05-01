@@ -1,2 +1,12 @@
 .cache/
 scripts/__pycache__/
+
+# Ignore ad hoc Graphify run outputs, keep curated sample artifacts tracked.
+graph/graphify_outputs/*/
+!graph/graphify_outputs/.gitkeep
+!graph/graphify_outputs/ibex_rtl/
+!graph/graphify_outputs/ibex_rtl/**
+!graph/graphify_outputs/opentitan_uart_dv/
+!graph/graphify_outputs/opentitan_uart_dv/**
+!graph/graphify_outputs/uvm_example/
+!graph/graphify_outputs/uvm_example/**
