@@ -60,7 +60,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_compressed_decoder_sv",
-      "community": 3,
+      "community": 2,
       "norm_label": "ibex_compressed_decoder.sv"
     },
     {
@@ -70,7 +70,7 @@
       "source_location": "L16",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder",
-      "community": 3,
+      "community": 2,
       "norm_label": "ibex_compressed_decoder"
     },
     {
@@ -80,7 +80,7 @@
       "source_location": "L42",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_stack_adj_base",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_stack_adj_base()"
     },
     {
@@ -90,7 +90,7 @@
       "source_location": "L53",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_stack_adj",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_stack_adj()"
     },
     {
@@ -100,7 +100,7 @@
       "source_location": "L57",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_stack_adj_word",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_stack_adj_word()"
     },
     {
@@ -110,7 +110,7 @@
       "source_location": "L66",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_rlist_top_reg",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_rlist_top_reg()"
     },
     {
@@ -120,7 +120,7 @@
       "source_location": "L79",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_push_store_reg",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_push_store_reg()"
     },
     {
@@ -130,7 +130,7 @@
       "source_location": "L97",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_pop_load_reg",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_pop_load_reg()"
     },
     {
@@ -140,7 +140,7 @@
       "source_location": "L108",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_sp_addi",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_sp_addi()"
     },
     {
@@ -150,7 +150,7 @@
       "source_location": "L127",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_mv_reg",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_mv_reg()"
     },
     {
@@ -160,7 +160,7 @@
       "source_location": "L137",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_zero_a0",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_zero_a0()"
     },
     {
@@ -170,7 +170,7 @@
       "source_location": "L141",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_ret_ra",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_ret_ra()"
     },
     {
@@ -180,7 +180,7 @@
       "source_location": "L151",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_mvsa01",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_mvsa01()"
     },
     {
@@ -190,7 +190,7 @@
       "source_location": "L158",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_mva01s",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_mva01s()"
     },
     {
@@ -200,7 +200,7 @@
       "source_location": "L165",
       "confidence_score": 1.0,
       "id": "rtl_ibex_compressed_decoder_ibex_compressed_decoder_cm_rlist_init",
-      "community": 3,
+      "community": 2,
       "norm_label": "cm_rlist_init()"
     },
     {
@@ -230,7 +230,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_core_sv",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_core.sv"
     },
     {
@@ -240,7 +240,7 @@
       "source_location": "L16",
       "confidence_score": 1.0,
       "id": "rtl_ibex_core_ibex_core",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_core"
     },
     {
@@ -250,7 +250,7 @@
       "source_location": "L428",
       "confidence_score": 1.0,
       "id": "ibex_if_stage",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_if_stage"
     },
     {
@@ -260,7 +260,7 @@
       "source_location": "L556",
       "confidence_score": 1.0,
       "id": "ibex_id_stage",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_id_stage"
     },
     {
@@ -270,7 +270,7 @@
       "source_location": "L723",
       "confidence_score": 1.0,
       "id": "ibex_ex_block",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_ex_block"
     },
     {
@@ -280,7 +280,7 @@
       "source_location": "L775",
       "confidence_score": 1.0,
       "id": "ibex_load_store_unit",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_load_store_unit"
     },
     {
@@ -290,7 +290,7 @@
       "source_location": "L826",
       "confidence_score": 1.0,
       "id": "ibex_wb_stage",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_wb_stage"
     },
     {
@@ -300,38 +300,8 @@
       "source_location": "L1055",
       "confidence_score": 1.0,
       "id": "ibex_cs_registers",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_cs_registers"
-    },
-    {
-      "label": "prim_buf",
-      "file_type": "code",
-      "source_file": "ibex_top.sv",
-      "source_location": "L294",
-      "confidence_score": 1.0,
-      "id": "prim_buf",
-      "community": 2,
-      "norm_label": "prim_buf"
-    },
-    {
-      "label": "prim_secded_inv_39_32_enc",
-      "file_type": "code",
-      "source_file": "ibex_core.sv",
-      "source_location": "L909",
-      "confidence_score": 1.0,
-      "id": "prim_secded_inv_39_32_enc",
-      "community": 2,
-      "norm_label": "prim_secded_inv_39_32_enc"
-    },
-    {
-      "label": "prim_secded_inv_39_32_dec",
-      "file_type": "code",
-      "source_file": "ibex_top.sv",
-      "source_location": "L1370",
-      "confidence_score": 1.0,
-      "id": "prim_secded_inv_39_32_dec",
-      "community": 2,
-      "norm_label": "prim_secded_inv_39_32_dec"
     },
     {
       "label": "ibex_pmp",
@@ -340,7 +310,7 @@
       "source_location": "L1191",
       "confidence_score": 1.0,
       "id": "ibex_pmp",
-      "community": 2,
+      "community": 3,
       "norm_label": "ibex_pmp"
     },
     {
@@ -540,7 +510,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_icache_sv",
-      "community": 8,
+      "community": 1,
       "norm_label": "ibex_icache.sv"
     },
     {
@@ -550,28 +520,8 @@
       "source_location": "L13",
       "confidence_score": 1.0,
       "id": "rtl_ibex_icache_ibex_icache",
-      "community": 8,
+      "community": 1,
       "norm_label": "ibex_icache"
-    },
-    {
-      "label": "prim_secded_inv_28_22_enc",
-      "file_type": "code",
-      "source_file": "ibex_icache.sv",
-      "source_location": "L295",
-      "confidence_score": 1.0,
-      "id": "prim_secded_inv_28_22_enc",
-      "community": 8,
-      "norm_label": "prim_secded_inv_28_22_enc"
-    },
-    {
-      "label": "prim_secded_inv_28_22_dec",
-      "file_type": "code",
-      "source_file": "ibex_icache.sv",
-      "source_location": "L553",
-      "confidence_score": 1.0,
-      "id": "prim_secded_inv_28_22_dec",
-      "community": 8,
-      "norm_label": "prim_secded_inv_28_22_dec"
     },
     {
       "label": "ibex_id_stage.sv",
@@ -580,7 +530,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_id_stage_sv",
-      "community": 1,
+      "community": 8,
       "norm_label": "ibex_id_stage.sv"
     },
     {
@@ -590,7 +540,7 @@
       "source_location": "L20",
       "confidence_score": 1.0,
       "id": "rtl_ibex_id_stage_ibex_id_stage",
-      "community": 1,
+      "community": 8,
       "norm_label": "ibex_id_stage"
     },
     {
@@ -600,7 +550,7 @@
       "source_location": "L436",
       "confidence_score": 1.0,
       "id": "ibex_decoder",
-      "community": 1,
+      "community": 8,
       "norm_label": "ibex_decoder"
     },
     {
@@ -610,7 +560,7 @@
       "source_location": "L546",
       "confidence_score": 1.0,
       "id": "ibex_controller",
-      "community": 1,
+      "community": 8,
       "norm_label": "ibex_controller"
     },
     {
@@ -620,7 +570,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_if_stage_sv",
-      "community": 2,
+      "community": 5,
       "norm_label": "ibex_if_stage.sv"
     },
     {
@@ -630,7 +580,7 @@
       "source_location": "L16",
       "confidence_score": 1.0,
       "id": "rtl_ibex_if_stage_ibex_if_stage",
-      "community": 2,
+      "community": 5,
       "norm_label": "ibex_if_stage"
     },
     {
@@ -640,7 +590,7 @@
       "source_location": "L380",
       "confidence_score": 1.0,
       "id": "rtl_ibex_if_stage_ibex_if_stage_simutil_get_scramble_key",
-      "community": 2,
+      "community": 5,
       "norm_label": "simutil_get_scramble_key()"
     },
     {
@@ -650,7 +600,7 @@
       "source_location": "L383",
       "confidence_score": 1.0,
       "id": "rtl_ibex_if_stage_ibex_if_stage_simutil_get_scramble_nonce",
-      "community": 2,
+      "community": 5,
       "norm_label": "simutil_get_scramble_nonce()"
     },
     {
@@ -660,7 +610,7 @@
       "source_location": "L414",
       "confidence_score": 1.0,
       "id": "ibex_compressed_decoder",
-      "community": 2,
+      "community": 5,
       "norm_label": "ibex_compressed_decoder"
     },
     {
@@ -670,7 +620,7 @@
       "source_location": "L433",
       "confidence_score": 1.0,
       "id": "ibex_dummy_instr",
-      "community": 2,
+      "community": 5,
       "norm_label": "ibex_dummy_instr"
     },
     {
@@ -680,7 +630,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_load_store_unit_sv",
-      "community": 2,
+      "community": 14,
       "norm_label": "ibex_load_store_unit.sv"
     },
     {
@@ -690,7 +640,7 @@
       "source_location": "L17",
       "confidence_score": 1.0,
       "id": "rtl_ibex_load_store_unit_ibex_load_store_unit",
-      "community": 2,
+      "community": 14,
       "norm_label": "ibex_load_store_unit"
     },
     {
@@ -700,7 +650,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_lockstep_sv",
-      "community": 5,
+      "community": 6,
       "norm_label": "ibex_lockstep.sv"
     },
     {
@@ -710,7 +660,7 @@
       "source_location": "L11",
       "confidence_score": 1.0,
       "id": "rtl_ibex_lockstep_ibex_lockstep",
-      "community": 5,
+      "community": 6,
       "norm_label": "ibex_lockstep"
     },
     {
@@ -720,7 +670,7 @@
       "source_location": "L125",
       "confidence_score": 1.0,
       "id": "prim_secded_pkg",
-      "community": 5,
+      "community": 6,
       "norm_label": "prim_secded_pkg"
     },
     {
@@ -730,7 +680,7 @@
       "source_location": "L199",
       "confidence_score": 1.0,
       "id": "prim_flop",
-      "community": 5,
+      "community": 6,
       "norm_label": "prim_flop"
     },
     {
@@ -740,18 +690,8 @@
       "source_location": "L219",
       "confidence_score": 1.0,
       "id": "prim_clock_mux2",
-      "community": 5,
+      "community": 6,
       "norm_label": "prim_clock_mux2"
-    },
-    {
-      "label": "prim_count",
-      "file_type": "code",
-      "source_file": "ibex_lockstep.sv",
-      "source_location": "L145",
-      "confidence_score": 1.0,
-      "id": "prim_count",
-      "community": 5,
-      "norm_label": "prim_count"
     },
     {
       "label": "ibex_core",
@@ -760,7 +700,7 @@
       "source_location": "L416",
       "confidence_score": 1.0,
       "id": "ibex_core",
-      "community": 5,
+      "community": 6,
       "norm_label": "ibex_core"
     },
     {
@@ -810,7 +750,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_pkg_sv",
-      "community": 16,
+      "community": 17,
       "norm_label": "ibex_pkg.sv"
     },
     {
@@ -820,7 +760,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_pmp_sv",
-      "community": 6,
+      "community": 1,
       "norm_label": "ibex_pmp.sv"
     },
     {
@@ -830,7 +770,7 @@
       "source_location": "L7",
       "confidence_score": 1.0,
       "id": "rtl_ibex_pmp_ibex_pmp",
-      "community": 6,
+      "community": 1,
       "norm_label": "ibex_pmp"
     },
     {
@@ -840,7 +780,7 @@
       "source_location": "L59",
       "confidence_score": 1.0,
       "id": "rtl_ibex_pmp_ibex_pmp_mml_perm_check",
-      "community": 6,
+      "community": 1,
       "norm_label": "mml_perm_check()"
     },
     {
@@ -850,7 +790,7 @@
       "source_location": "L101",
       "confidence_score": 1.0,
       "id": "rtl_ibex_pmp_ibex_pmp_orig_perm_check",
-      "community": 6,
+      "community": 1,
       "norm_label": "orig_perm_check()"
     },
     {
@@ -860,7 +800,7 @@
       "source_location": "L113",
       "confidence_score": 1.0,
       "id": "rtl_ibex_pmp_ibex_pmp_perm_check_wrapper",
-      "community": 6,
+      "community": 1,
       "norm_label": "perm_check_wrapper()"
     },
     {
@@ -870,7 +810,7 @@
       "source_location": "L128",
       "confidence_score": 1.0,
       "id": "rtl_ibex_pmp_ibex_pmp_access_fault_check",
-      "community": 6,
+      "community": 1,
       "norm_label": "access_fault_check()"
     },
     {
@@ -910,7 +850,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_register_file_ff_sv",
-      "community": 14,
+      "community": 15,
       "norm_label": "ibex_register_file_ff.sv"
     },
     {
@@ -920,7 +860,7 @@
       "source_location": "L13",
       "confidence_score": 1.0,
       "id": "rtl_ibex_register_file_ff_ibex_register_file_ff",
-      "community": 14,
+      "community": 15,
       "norm_label": "ibex_register_file_ff"
     },
     {
@@ -930,7 +870,7 @@
       "source_location": "L1",
       "confidence_score": 1.0,
       "id": "ibex_register_file_fpga_sv",
-      "community": 15,
+      "community": 16,
       "norm_label": "ibex_register_file_fpga.sv"
     },
     {
@@ -940,7 +880,7 @@
       "source_location": "L14",
       "confidence_score": 1.0,
       "id": "rtl_ibex_register_file_fpga_ibex_register_file_fpga",
-      "community": 15,
+      "community": 16,
       "norm_label": "ibex_register_file_fpga"
     },
     {
@@ -994,6 +934,16 @@
       "norm_label": "ibex_top"
     },
     {
+      "label": "prim_buf",
+      "file_type": "code",
+      "source_file": "ibex_top.sv",
+      "source_location": "L294",
+      "confidence_score": 1.0,
+      "id": "prim_buf",
+      "community": 4,
+      "norm_label": "prim_buf"
+    },
+    {
       "label": "insn_write_sync_exc_seen()",
       "file_type": "code",
       "source_file": "ibex_top.sv",
@@ -1012,26 +962,6 @@
       "id": "rtl_ibex_top_ibex_top_new_sync_exc_bit",
       "community": 4,
       "norm_label": "new_sync_exc_bit()"
-    },
-    {
-      "label": "prim_ram_1p_scr",
-      "file_type": "code",
-      "source_file": "ibex_top.sv",
-      "source_location": "L634",
-      "confidence_score": 1.0,
-      "id": "prim_ram_1p_scr",
-      "community": 4,
-      "norm_label": "prim_ram_1p_scr"
-    },
-    {
-      "label": "prim_ram_1p",
-      "file_type": "code",
-      "source_file": "ibex_top.sv",
-      "source_location": "L725",
-      "confidence_score": 1.0,
-      "id": "prim_ram_1p",
-      "community": 4,
-      "norm_label": "prim_ram_1p"
     },
     {
       "label": "ibex_lockstep",
@@ -2088,120 +2018,12 @@
       "confidence": "INFERRED",
       "confidence_score": 0.7,
       "source_file": "ibex_core.sv",
-      "source_location": "L403",
-      "weight": 1.0,
-      "_src": "rtl_ibex_core_ibex_core",
-      "_tgt": "prim_buf",
-      "source": "rtl_ibex_core_ibex_core",
-      "target": "prim_buf"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_core.sv",
-      "source_location": "L909",
-      "weight": 1.0,
-      "_src": "rtl_ibex_core_ibex_core",
-      "_tgt": "prim_secded_inv_39_32_enc",
-      "source": "rtl_ibex_core_ibex_core",
-      "target": "prim_secded_inv_39_32_enc"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_core.sv",
-      "source_location": "L923",
-      "weight": 1.0,
-      "_src": "rtl_ibex_core_ibex_core",
-      "_tgt": "prim_secded_inv_39_32_dec",
-      "source": "rtl_ibex_core_ibex_core",
-      "target": "prim_secded_inv_39_32_dec"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_core.sv",
       "source_location": "L1191",
       "weight": 1.0,
       "_src": "rtl_ibex_core_ibex_core",
       "_tgt": "ibex_pmp",
       "source": "rtl_ibex_core_ibex_core",
       "target": "ibex_pmp"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_if_stage.sv",
-      "source_location": "L580",
-      "weight": 1.0,
-      "_src": "rtl_ibex_if_stage_ibex_if_stage",
-      "_tgt": "prim_buf",
-      "source": "prim_buf",
-      "target": "rtl_ibex_if_stage_ibex_if_stage"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_load_store_unit.sv",
-      "source_location": "L337",
-      "weight": 1.0,
-      "_src": "rtl_ibex_load_store_unit_ibex_load_store_unit",
-      "_tgt": "prim_buf",
-      "source": "prim_buf",
-      "target": "rtl_ibex_load_store_unit_ibex_load_store_unit"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_top.sv",
-      "source_location": "L1112",
-      "weight": 1.0,
-      "_src": "rtl_ibex_top_ibex_top",
-      "_tgt": "prim_buf",
-      "source": "prim_buf",
-      "target": "rtl_ibex_top_ibex_top"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_if_stage.sv",
-      "source_location": "L241",
-      "weight": 1.0,
-      "_src": "rtl_ibex_if_stage_ibex_if_stage",
-      "_tgt": "prim_secded_inv_39_32_dec",
-      "source": "prim_secded_inv_39_32_dec",
-      "target": "rtl_ibex_if_stage_ibex_if_stage"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_load_store_unit.sv",
-      "source_location": "L342",
-      "weight": 1.0,
-      "_src": "rtl_ibex_load_store_unit_ibex_load_store_unit",
-      "_tgt": "prim_secded_inv_39_32_dec",
-      "source": "prim_secded_inv_39_32_dec",
-      "target": "rtl_ibex_load_store_unit_ibex_load_store_unit"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_top.sv",
-      "source_location": "L1370",
-      "weight": 1.0,
-      "_src": "rtl_ibex_top_ibex_top",
-      "_tgt": "prim_secded_inv_39_32_dec",
-      "source": "prim_secded_inv_39_32_dec",
-      "target": "rtl_ibex_top_ibex_top"
     },
     {
       "relation": "defines",
@@ -2360,30 +2182,6 @@
       "target": "rtl_ibex_icache_ibex_icache"
     },
     {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_icache.sv",
-      "source_location": "L295",
-      "weight": 1.0,
-      "_src": "rtl_ibex_icache_ibex_icache",
-      "_tgt": "prim_secded_inv_28_22_enc",
-      "source": "rtl_ibex_icache_ibex_icache",
-      "target": "prim_secded_inv_28_22_enc"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_icache.sv",
-      "source_location": "L553",
-      "weight": 1.0,
-      "_src": "rtl_ibex_icache_ibex_icache",
-      "_tgt": "prim_secded_inv_28_22_dec",
-      "source": "rtl_ibex_icache_ibex_icache",
-      "target": "prim_secded_inv_28_22_dec"
-    },
-    {
       "relation": "defines",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -2517,10 +2315,10 @@
     },
     {
       "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "ibex_lockstep.sv",
-      "source_location": "L207",
+      "source_location": "L209",
       "weight": 1.0,
       "_src": "rtl_ibex_lockstep_ibex_lockstep",
       "_tgt": "prim_flop",
@@ -2529,27 +2327,15 @@
     },
     {
       "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "ibex_lockstep.sv",
-      "source_location": "L217",
+      "source_location": "L219",
       "weight": 1.0,
       "_src": "rtl_ibex_lockstep_ibex_lockstep",
       "_tgt": "prim_clock_mux2",
       "source": "rtl_ibex_lockstep_ibex_lockstep",
       "target": "prim_clock_mux2"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_lockstep.sv",
-      "source_location": "L145",
-      "weight": 1.0,
-      "_src": "rtl_ibex_lockstep_ibex_lockstep",
-      "_tgt": "prim_count",
-      "source": "rtl_ibex_lockstep_ibex_lockstep",
-      "target": "prim_count"
     },
     {
       "relation": "instantiates",
@@ -2709,10 +2495,10 @@
     },
     {
       "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "ibex_register_file_latch.sv",
-      "source_location": "L135",
+      "source_location": "L71",
       "weight": 1.0,
       "_src": "rtl_ibex_register_file_latch_ibex_register_file_latch",
       "_tgt": "prim_clock_gating",
@@ -2721,10 +2507,10 @@
     },
     {
       "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "ibex_top.sv",
-      "source_location": "L280",
+      "source_location": "L282",
       "weight": 1.0,
       "_src": "rtl_ibex_top_ibex_top",
       "_tgt": "prim_clock_gating",
@@ -2742,6 +2528,18 @@
       "_tgt": "rtl_ibex_top_ibex_top",
       "source": "ibex_top_sv",
       "target": "rtl_ibex_top_ibex_top"
+    },
+    {
+      "relation": "instantiates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ibex_top.sv",
+      "source_location": "L294",
+      "weight": 1.0,
+      "_src": "rtl_ibex_top_ibex_top",
+      "_tgt": "prim_buf",
+      "source": "rtl_ibex_top_ibex_top",
+      "target": "prim_buf"
     },
     {
       "relation": "contains",
@@ -2766,30 +2564,6 @@
       "_tgt": "rtl_ibex_top_ibex_top_new_sync_exc_bit",
       "source": "rtl_ibex_top_ibex_top",
       "target": "rtl_ibex_top_ibex_top_new_sync_exc_bit"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_top.sv",
-      "source_location": "L634",
-      "weight": 1.0,
-      "_src": "rtl_ibex_top_ibex_top",
-      "_tgt": "prim_ram_1p_scr",
-      "source": "rtl_ibex_top_ibex_top",
-      "target": "prim_ram_1p_scr"
-    },
-    {
-      "relation": "instantiates",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "ibex_top.sv",
-      "source_location": "L725",
-      "weight": 1.0,
-      "_src": "rtl_ibex_top_ibex_top",
-      "_tgt": "prim_ram_1p",
-      "source": "rtl_ibex_top_ibex_top",
-      "target": "prim_ram_1p"
     },
     {
       "relation": "instantiates",

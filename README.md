@@ -387,6 +387,7 @@ Near-term emphasis:
 - [x] Recover basic SystemVerilog module hierarchy edges (`defines`, `instantiates`) from tree-sitter field mismatches
 - [x] Recover missing instantiations in parser-error and generate-heavy regions
 - [x] Tighten fallback precision with comment masking, statement-shaped parsing, module-name validation, and keyword rejection
+- [x] Remove project-specific `prim_` promotion from the fallback structural extractor and replace it with a generalized unresolved-external relation
 - [x] Make `scripts/run_graphify.py` prefer the vendored Graphify fork by default so local extractor work actually shows up in generated artifacts
 - [x] Re-run Ibex targets after extractor improvements and compare edge coverage deltas
 

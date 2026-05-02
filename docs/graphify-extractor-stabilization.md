@@ -30,7 +30,8 @@ During Ibex graph generation, the original fallback extraction path produced maj
 - [x] Mask comments and string literals before fallback parsing so prose and macros do not become graph nodes
 - [x] Reject obvious non-module tokens and labels such as `default`, `begin`, `endcase`, `unique`, and similar control words
 - [x] Cross-check fallback module candidates against known local `module`/`macromodule` definitions when possible
-- [x] Keep likely external primitive cells only through conservative heuristics (`prim_*`, escaped identifiers, ALL_CAPS cells)
+- [x] Keep unresolved fallback targets out of structural `instantiates` unless they can be justified by local definition discovery
+- [x] Downgrade unresolved external-looking fallback targets to a separate low-confidence relation instead of hard-coding project-specific prefixes
 - [x] Dedupe structural `instantiates` edges emitted from mixed AST + fallback paths
 - [x] Make `scripts/run_graphify.py` prefer the vendored `vendor/graphify` fork by default
 - [x] Re-run Ibex extraction with the vendored fork and verify the false-hub issue is gone
@@ -63,6 +64,7 @@ Structural extractor changes:
 - validates optional `#(...)` parameter blocks with balanced parentheses
 - rejects control-flow labels and obvious non-module keywords
 - validates module-type candidates against locally discoverable module definitions
+- emits unresolved external-looking fallback targets as `references_unresolved_module` instead of forcing them into `instantiates`
 - dedupes repeated AST/fallback structural edges cleanly
 
 Design intent:
