@@ -1,6 +1,6 @@
 # Graphify Workflow
 
-This repository now has a reproducible Graphify entrypoint that works for both local examples and larger open-source RTL/UVM repositories.
+This repository keeps the Graphify entrypoint intentionally small and reproducible.
 
 ## What it does
 
@@ -9,20 +9,26 @@ This repository now has a reproducible Graphify entrypoint that works for both l
 - scans a local input directory or stages a remote git repository
 - optionally honors simulator-style filelists for ordering and exact source selection
 - writes a stable JSON manifest under `graph/graphify_outputs/`
-- emits a heuristic `summary.json` plus Markdown, HTML, and PNG visualizations
-- optionally invokes a `graphify analyze` CLI if Graphify is installed
+- uses the official `graphifyy` Python package to generate `graph.json`, `graph.html`, and `GRAPH_REPORT.md`
 
-This keeps the repository usable even when Graphify setup differs across machines.
+The repository does not maintain a custom heuristic parser, summary format, or bespoke graph renderer anymore. Artifact structure follows Graphify's native outputs, with PNG capture kept as a small debugging helper.
 
 ## Quick start
 
-Write manifest, summary, and visualization only:
+Install Graphify first:
+
+```bash
+python3 -m pip install --user graphifyy
+graphify install --platform claw
+```
+
+Write the manifest only:
 
 ```bash
 python3 scripts/run_graphify.py examples/rtl --manifest-only
 ```
 
-Analyze the UVM example when Graphify is installed:
+Generate Graphify artifacts for the UVM example:
 
 ```bash
 python3 scripts/run_graphify.py examples/uvm_tb
@@ -35,29 +41,19 @@ python3 scripts/run_graphify.py \
   https://github.com/lowRISC/ibex.git \
   --repo-ref master \
   --sparse-path rtl \
-  --output-dir graph/graphify_outputs/ibex_rtl \
-  --manifest-only
-```
-
-Pass through extra CLI options to Graphify:
-
-```bash
-python3 scripts/run_graphify.py examples/uvm_tb --graphify-args --format json
+  --output-dir graph/graphify_outputs/ibex_rtl
 ```
 
 ## Output layout
 
-Default output directory:
+Default output directory after a full run:
 
 ```text
 graph/graphify_outputs/latest/
 ├── sources.json
-├── summary.json
-├── graph.md
-├── network-graph.html
-├── network-graph.png
-├── graph-report.png
-└── ... Graphify-generated outputs ...
+├── graph.json
+├── graph.html
+└── GRAPH_REPORT.md
 ```
 
 `sources.json` records:
@@ -65,14 +61,18 @@ graph/graphify_outputs/latest/
 - absolute input root
 - source count
 - absolute source paths in deterministic order
+- relative source paths
+- optional repo and filelist metadata
 
-`summary.json` adds a lightweight structural inventory:
+## Debugging support
 
-- recovered modules, interfaces, packages, and classes
-- import / inheritance / instantiation edges
-- per-file UVM markers such as `run_test`, `uvm_config_db`, and analysis-port usage
+If Graphify emits HTML artifacts and you want a static screenshot for review, use:
 
-`graph.md` renders that inventory as Markdown with a Mermaid graph and a largest-file table.
+```bash
+python3 scripts/render_html_to_png.py path/to/graphify-output.html --output path/to/graphify-output.png
+```
+
+This is a lightweight debugging helper only, not part of the main workflow. If Chromium is not installed system-wide, a Playwright-managed browser under `~/.cache/ms-playwright/` is also supported.
 
 ## Next reading
 
