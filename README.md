@@ -381,6 +381,23 @@ Near-term emphasis:
 - Review CSR / register-driven verification intent against implementation artifacts
 - Keep AI outputs reviewable, bounded, and traceable
 
+## Current Graphify TODOs
+
+- [x] Vendor Graphify fork as a submodule at `vendor/graphify`
+- [x] Recover basic SystemVerilog module hierarchy edges (`defines`, `instantiates`) from tree-sitter field mismatches
+- [x] Recover missing instantiations in parser-error and generate-heavy regions
+- [x] Tighten fallback precision with comment masking, statement-shaped parsing, module-name validation, and keyword rejection
+- [x] Make `scripts/run_graphify.py` prefer the vendored Graphify fork by default so local extractor work actually shows up in generated artifacts
+- [x] Re-run Ibex targets after extractor improvements and compare edge coverage deltas
+
+## Graphify Extractor Next Backlog
+
+- [ ] Preserve repeated instantiations as weighted edges or multiedges instead of collapsing them in the final graph
+- [ ] Add signal connectivity extraction, starting with instance port bindings and simple `assign` dependencies
+- [ ] Add function/task call edges for local helper-heavy RTL modules
+- [ ] Add package-qualified symbol/type usage edges such as `ibex_pkg::...`
+- [ ] Add UVM-oriented extraction adapters on top of the same confidence/scoping framework
+
 Recent Graphify application summary:
 
 - validated on local UVM example manifest generation

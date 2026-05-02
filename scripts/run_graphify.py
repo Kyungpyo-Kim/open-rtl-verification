@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -35,6 +36,8 @@ DEFAULT_EXCLUDES = (
     "__pycache__",
 )
 FILELIST_VAR_RE = re.compile(r"\$\(([^)]+)\)|\$([A-Za-z_][A-Za-z0-9_]*)")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+VENDORED_GRAPHIFY_ROOT = REPO_ROOT / "vendor" / "graphify"
 
 
 def parse_args() -> argparse.Namespace:
@@ -89,7 +92,28 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Write manifest only, do not generate Graphify outputs",
     )
+    parser.add_argument(
+        "--graphify-source",
+        choices=("auto", "vendor", "installed"),
+        default="auto",
+        help="Choose Graphify import source. 'auto' prefers the vendored fork when present.",
+    )
     return parser.parse_args()
+
+
+def configure_graphify_import(source: str) -> str:
+    vendor_available = (VENDORED_GRAPHIFY_ROOT / "graphify").is_dir()
+    if source == "installed":
+        return "installed"
+    if source == "vendor":
+        if not vendor_available:
+            raise RuntimeError(f"GRAPHIFY_VENDOR_NOT_FOUND: {VENDORED_GRAPHIFY_ROOT}")
+        sys.path.insert(0, str(VENDORED_GRAPHIFY_ROOT))
+        return "vendor"
+    if vendor_available:
+        sys.path.insert(0, str(VENDORED_GRAPHIFY_ROOT))
+        return "vendor"
+    return "installed"
 
 
 def is_git_url(value: str) -> bool:
@@ -290,6 +314,11 @@ def run_graphify(manifest_path: Path, input_root: Path, output_dir: Path, source
 
 def main() -> int:
     args = parse_args()
+    try:
+        graphify_source = configure_graphify_import(args.graphify_source)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
     output_dir = Path(args.output_dir).resolve()
     excluded_names = set(DEFAULT_EXCLUDES).union(args.exclude_dir)
 
@@ -328,6 +357,7 @@ def main() -> int:
 
     print(f"MANIFEST_WRITTEN: {manifest_path}")
     print(f"SOURCE_COUNT: {len(sources)}")
+    print(f"GRAPHIFY_SOURCE: {graphify_source}")
 
     if args.manifest_only:
         return 0
