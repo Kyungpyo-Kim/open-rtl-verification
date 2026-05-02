@@ -177,6 +177,14 @@ python3 -m pip install --user graphifyy
 graphify install --platform claw
 ```
 
+If you want to modify Graphify locally, use the pinned submodule fork instead:
+
+```bash
+git submodule update --init --recursive
+python3 -m pip install --user -e ./vendor/graphify
+graphify install --platform claw
+```
+
 Then generate Graphify artifacts directly:
 
 ```bash

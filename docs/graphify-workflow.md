@@ -15,12 +15,24 @@ The repository does not maintain a custom heuristic parser, summary format, or b
 
 ## Quick start
 
-Install Graphify first:
+### Default, upstream package install
 
 ```bash
 python3 -m pip install --user graphifyy
 graphify install --platform claw
 ```
+
+### Local fork development via submodule
+
+This repository can pin a Graphify fork as a git submodule for local extractor work.
+
+```bash
+git submodule update --init --recursive
+python3 -m pip install --user -e ./vendor/graphify
+graphify install --platform claw
+```
+
+The editable install makes `scripts/run_graphify.py` import Graphify from `vendor/graphify/` instead of the previously installed wheel.
 
 Write the manifest only:
 
