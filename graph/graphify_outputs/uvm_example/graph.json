@@ -1,0 +1,96 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "tb_counter_uvm.sv",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L1",
+      "confidence_score": 1.0,
+      "id": "tb_counter_uvm_sv",
+      "community": 0,
+      "norm_label": "tb_counter_uvm.sv"
+    },
+    {
+      "label": "uvm_pkg",
+      "file_type": "code",
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L2",
+      "confidence_score": 1.0,
+      "id": "uvm_pkg",
+      "community": 1,
+      "norm_label": "uvm_pkg"
+    },
+    {
+      "label": "tb_counter_pkg",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L6",
+      "confidence_score": 1.0,
+      "id": "tb_counter_pkg",
+      "community": 0,
+      "norm_label": "tb_counter_pkg"
+    },
+    {
+      "label": "tb_counter_pkg.sv",
+      "file_type": "code",
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L1",
+      "confidence_score": 1.0,
+      "id": "tb_counter_pkg_sv",
+      "community": 1,
+      "norm_label": "tb_counter_pkg.sv"
+    },
+    {
+      "label": "counter_if.sv",
+      "file_type": "code",
+      "source_file": "counter_if.sv",
+      "source_location": "L1",
+      "confidence_score": 1.0,
+      "id": "counter_if_sv",
+      "community": 2,
+      "norm_label": "counter_if.sv"
+    }
+  ],
+  "links": [
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_src": "tb_counter_uvm_sv",
+      "_tgt": "uvm_pkg",
+      "source": "tb_counter_uvm_sv",
+      "target": "uvm_pkg"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "tb_counter_uvm_sv",
+      "_tgt": "tb_counter_pkg",
+      "source": "tb_counter_uvm_sv",
+      "target": "tb_counter_pkg"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_src": "tb_counter_pkg_sv",
+      "_tgt": "uvm_pkg",
+      "source": "uvm_pkg",
+      "target": "tb_counter_pkg_sv"
+    }
+  ],
+  "hyperedges": []
+}

@@ -1,0 +1,25 @@
+{
+  "targets": [
+    {
+      "name": "ibex_rtl",
+      "description": "lowRISC Ibex RTL-only target for larger open-source core hierarchy analysis.",
+      "repo_url": "https://github.com/lowRISC/ibex.git",
+      "repo_ref": "master",
+      "sparse_paths": [
+        "rtl"
+      ],
+      "output_dir": "graph/graphify_outputs/ibex_rtl"
+    },
+    {
+      "name": "opentitan_uart_dv",
+      "description": "OpenTitan UART IP plus shared DV/UVM infrastructure for large-scale UVM-oriented analysis.",
+      "repo_url": "https://github.com/lowRISC/opentitan.git",
+      "repo_ref": "master",
+      "sparse_paths": [
+        "hw/ip/uart",
+        "hw/dv/sv"
+      ],
+      "output_dir": "graph/graphify_outputs/opentitan_uart_dv"
+    }
+  ]
+}

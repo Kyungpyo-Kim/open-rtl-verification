@@ -170,10 +170,34 @@ open-rtl-verification/
 python3 scripts/run_graphify.py examples/rtl --manifest-only
 ```
 
-When Graphify is installed, the same entrypoint can invoke it directly:
+Install Graphify first:
+
+```bash
+python3 -m pip install --user graphifyy
+graphify install --platform claw
+```
+
+Then generate Graphify artifacts directly:
 
 ```bash
 python3 scripts/run_graphify.py examples/rtl
+```
+
+The workflow now also supports:
+
+- public git repo staging for open RTL / UVM targets
+- sparse checkout for large repositories
+- filelist-aware source selection
+- deterministic `sources.json` manifest generation for Graphify
+
+Example, larger open RTL target:
+
+```bash
+python3 scripts/run_graphify.py \
+  https://github.com/lowRISC/ibex.git \
+  --repo-ref master \
+  --sparse-path rtl \
+  --output-dir graph/graphify_outputs/ibex_rtl
 ```
 
 ### 2. Testbench Analysis
@@ -333,8 +357,10 @@ Current repository assets:
 - `examples/rtl/counter.sv`: small DUT for graph extraction experiments
 - `examples/tb/tb_counter.sv`: matching SystemVerilog testbench skeleton
 - `examples/uvm_tb/`: minimal UVM environment for structure, sequence, analysis-port connectivity, and virtual-interface binding experiments
-- `scripts/run_graphify.py`: reproducible source collector and optional Graphify runner
-- `docs/graphify-workflow.md`: usage notes for the first analysis workflow
+- `scripts/run_graphify.py`: Graphify entrypoint with repo staging, sparse checkout, filelist support, and manifest generation
+- `configs/open_targets.json`: reusable open-source target presets for larger RTL/UVM analysis
+- `docs/graphify-workflow.md`: workflow usage notes
+- `docs/graphify-open-targets.md`: larger open-target manifest examples
 
 Focus:
 
@@ -346,3 +372,10 @@ Near-term emphasis:
 - Surface integration risks before simulation debug burns time
 - Review CSR / register-driven verification intent against implementation artifacts
 - Keep AI outputs reviewable, bounded, and traceable
+
+Recent Graphify application summary:
+
+- validated on local UVM example manifest generation
+- applied to `lowRISC/ibex` RTL hierarchy
+- applied to `lowRISC/opentitan` UART DV slice plus shared UVM infrastructure
+- kept README concise, with detailed target notes moved to `docs/graphify-open-targets.md`
