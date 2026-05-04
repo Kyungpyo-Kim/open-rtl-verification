@@ -1,5 +1,6 @@
 .cache/
 scripts/__pycache__/
+tests/__pycache__/
 
 # Ignore ad hoc Graphify run outputs, keep curated sample artifacts tracked.
 graph/graphify_outputs/*/
