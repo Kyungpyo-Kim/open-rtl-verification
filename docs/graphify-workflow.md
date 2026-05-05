@@ -32,7 +32,14 @@ python3 -m pip install --user -e ./vendor/graphify
 graphify install --platform claw
 ```
 
-The editable install makes `scripts/run_graphify.py` import Graphify from `vendor/graphify/` instead of the previously installed wheel.
+`scripts/run_graphify.py` now prefers the vendored fork automatically when `vendor/graphify/` exists. You can still override it explicitly:
+
+```bash
+python3 scripts/run_graphify.py examples/rtl --graphify-source vendor
+python3 scripts/run_graphify.py examples/rtl --graphify-source installed
+```
+
+Each run prints `GRAPHIFY_SOURCE: vendor` or `GRAPHIFY_SOURCE: installed` so the active import path is visible.
 
 Write the manifest only:
 

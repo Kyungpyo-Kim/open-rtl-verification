@@ -4,46 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "label": "tb_counter_uvm.sv",
-      "file_type": "code",
-      "source_file": "tb_counter_uvm.sv",
-      "source_location": "L1",
-      "confidence_score": 1.0,
-      "id": "tb_counter_uvm_sv",
-      "community": 0,
-      "norm_label": "tb_counter_uvm.sv"
-    },
-    {
-      "label": "uvm_pkg",
-      "file_type": "code",
-      "source_file": "tb_counter_pkg.sv",
-      "source_location": "L2",
-      "confidence_score": 1.0,
-      "id": "uvm_pkg",
-      "community": 1,
-      "norm_label": "uvm_pkg"
-    },
-    {
-      "label": "tb_counter_pkg",
-      "file_type": "code",
-      "source_file": "tb_counter_uvm.sv",
-      "source_location": "L6",
-      "confidence_score": 1.0,
-      "id": "tb_counter_pkg",
-      "community": 0,
-      "norm_label": "tb_counter_pkg"
-    },
-    {
-      "label": "tb_counter_pkg.sv",
-      "file_type": "code",
-      "source_file": "tb_counter_pkg.sv",
-      "source_location": "L1",
-      "confidence_score": 1.0,
-      "id": "tb_counter_pkg_sv",
-      "community": 1,
-      "norm_label": "tb_counter_pkg.sv"
-    },
-    {
       "label": "counter_if.sv",
       "file_type": "code",
       "source_file": "counter_if.sv",
@@ -52,33 +12,109 @@
       "id": "counter_if_sv",
       "community": 2,
       "norm_label": "counter_if.sv"
+    },
+    {
+      "label": "tb_counter_pkg.sv",
+      "file_type": "code",
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L1",
+      "confidence_score": 1.0,
+      "id": "tb_counter_pkg_sv",
+      "community": 0,
+      "norm_label": "tb_counter_pkg.sv"
+    },
+    {
+      "label": "uvm_pkg",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L5",
+      "confidence_score": 1.0,
+      "id": "uvm_pkg",
+      "community": 0,
+      "norm_label": "uvm_pkg"
+    },
+    {
+      "label": "body",
+      "file_type": "code",
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L28",
+      "confidence_score": 1.0,
+      "id": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_body",
+      "community": 0,
+      "norm_label": "body"
+    },
+    {
+      "label": "build_phase()",
+      "file_type": "code",
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L53",
+      "confidence_score": 1.0,
+      "id": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_build_phase",
+      "community": 0,
+      "norm_label": "build_phase()"
+    },
+    {
+      "label": "connect_phase()",
+      "file_type": "code",
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L148",
+      "confidence_score": 1.0,
+      "id": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_connect_phase",
+      "community": 0,
+      "norm_label": "connect_phase()"
+    },
+    {
+      "label": "tb_counter_uvm.sv",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L1",
+      "confidence_score": 1.0,
+      "id": "tb_counter_uvm_sv",
+      "community": 1,
+      "norm_label": "tb_counter_uvm.sv"
+    },
+    {
+      "label": "tb_counter_uvm",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L3",
+      "confidence_score": 1.0,
+      "id": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "community": 1,
+      "norm_label": "tb_counter_uvm"
+    },
+    {
+      "label": "tb_counter_pkg",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L6",
+      "confidence_score": 1.0,
+      "id": "tb_counter_pkg",
+      "community": 1,
+      "norm_label": "tb_counter_pkg"
+    },
+    {
+      "label": "counter_if",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L11",
+      "confidence_score": 1.0,
+      "id": "counter_if",
+      "community": 1,
+      "norm_label": "counter_if"
+    },
+    {
+      "label": "counter",
+      "file_type": "code",
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L13",
+      "confidence_score": 1.0,
+      "id": "counter",
+      "community": 1,
+      "norm_label": "counter"
     }
   ],
   "links": [
-    {
-      "relation": "imports_from",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tb_counter_uvm.sv",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_src": "tb_counter_uvm_sv",
-      "_tgt": "uvm_pkg",
-      "source": "tb_counter_uvm_sv",
-      "target": "uvm_pkg"
-    },
-    {
-      "relation": "imports_from",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tb_counter_uvm.sv",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_src": "tb_counter_uvm_sv",
-      "_tgt": "tb_counter_pkg",
-      "source": "tb_counter_uvm_sv",
-      "target": "tb_counter_pkg"
-    },
     {
       "relation": "imports_from",
       "confidence": "EXTRACTED",
@@ -88,8 +124,104 @@
       "weight": 1.0,
       "_src": "tb_counter_pkg_sv",
       "_tgt": "uvm_pkg",
+      "source": "tb_counter_pkg_sv",
+      "target": "uvm_pkg"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_src": "tb_counter_pkg_sv",
+      "_tgt": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_body",
+      "source": "tb_counter_pkg_sv",
+      "target": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_body"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L164",
+      "weight": 1.0,
+      "_src": "tb_counter_pkg_sv",
+      "_tgt": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_build_phase",
+      "source": "tb_counter_pkg_sv",
+      "target": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_build_phase"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_pkg.sv",
+      "source_location": "L170",
+      "weight": 1.0,
+      "_src": "tb_counter_pkg_sv",
+      "_tgt": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_connect_phase",
+      "source": "tb_counter_pkg_sv",
+      "target": "home_kyungpyo_ws_varuna_project_open_rtl_verification_examples_uvm_tb_tb_counter_pkg_sv_connect_phase"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_src": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "_tgt": "uvm_pkg",
       "source": "uvm_pkg",
-      "target": "tb_counter_pkg_sv"
+      "target": "uvm_tb_tb_counter_uvm_tb_counter_uvm"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "tb_counter_uvm_sv",
+      "_tgt": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "source": "tb_counter_uvm_sv",
+      "target": "uvm_tb_tb_counter_uvm_tb_counter_uvm"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "_tgt": "tb_counter_pkg",
+      "source": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "target": "tb_counter_pkg"
+    },
+    {
+      "relation": "instantiates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "_tgt": "counter_if",
+      "source": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "target": "counter_if"
+    },
+    {
+      "relation": "instantiates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tb_counter_uvm.sv",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_src": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "_tgt": "counter",
+      "source": "uvm_tb_tb_counter_uvm_tb_counter_uvm",
+      "target": "counter"
     }
   ],
   "hyperedges": []
