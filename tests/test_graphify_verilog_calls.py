@@ -45,6 +45,42 @@ endmodule
         self.assertIn(("top_task", "mid()"), call_edges)
         self.assertNotIn(("mid()", "if"), call_edges)
 
+    def test_extracts_function_calls_with_parameters(self):
+        source = """
+module param_demo;
+  function automatic int add;
+    input int a;
+    input int b;
+    return a + b;
+  endfunction
+
+  function automatic int calc;
+    input int x;
+    input int y;
+    return add(x, y);
+  endfunction
+
+  task automatic top_task;
+    int result;
+    result = calc(3, 4);
+  endtask
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "param_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        call_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "calls"
+        }
+
+        self.assertIn(("calc()", "add()"), call_edges)
+        self.assertIn(("top_task", "calc()"), call_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
