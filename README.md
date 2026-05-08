@@ -249,6 +249,16 @@ Review focus:
 open-rtl verify plan ./examples/rtl ./examples/tb
 ```
 
+## Testing
+
+Run the test suite from the repository root:
+
+```bash
+python -m pytest tests/ -v
+```
+
+All tests are expected to pass. When adding new features, please include corresponding test cases in the `tests/` directory.
+
 ## Verification Review Principles
 
 ### UVM integration analysis first
