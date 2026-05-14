@@ -129,20 +129,22 @@ This rule should stay true even when future work adds:
 These are intentionally **not** part of the finished stabilization checklist above.
 
 - [ ] Preserve repeated instantiations as multiedges or weighted edges
-- [ ] Add function/task call extraction for helper-heavy RTL like `ibex_tracer`
+- [x] Add function/task call extraction for helper-heavy RTL like `ibex_tracer`
 - [ ] Add package-qualified symbol/type-use extraction
 - [ ] Add signal connectivity edges such as instance port bindings and simple `assign` dependencies
 - [ ] Add UVM-specific adapters using the same confidence and validation framework
 - [ ] Split future graph views by confidence tier so exploratory edges do not pollute structural graphs
 
+Function/task call extraction is now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, and parameterized-call handling without keyword noise.
+
 ## Recommended Next Step
 
 The next highest-value extractor task is:
 
-1. function/task call edges
+1. package-qualified symbol/type-use extraction
 
 Why:
 
-- it explains currently isolated helper-function communities
-- it works for both RTL helper logic and UVM class/testbench code
-- it fits the same candidate -> validation -> final-edge structure already introduced here
+- it captures important verification context that still sits outside the structural graph
+- it complements the new call-edge coverage by explaining where enums, types, and shared constants come from
+- it fits the same precision-first validation approach used in the stabilization pass
