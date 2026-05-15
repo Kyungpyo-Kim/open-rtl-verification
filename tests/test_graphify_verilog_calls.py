@@ -81,6 +81,39 @@ endmodule
         self.assertIn(("calc()", "add()"), call_edges)
         self.assertIn(("top_task", "calc()"), call_edges)
 
+    def test_extracts_package_qualified_symbol_uses_in_local_scope(self):
+        source = """
+module pkg_demo;
+  import ibex_pkg::*;
+
+  function automatic ibex_pkg::alu_op_t decode;
+    return ibex_pkg::ALU_ADD;
+  endfunction
+
+  task automatic top_task;
+    ibex_pkg::csr_num_e csr_num;
+    csr_num = ibex_pkg::CSR_MSTATUS;
+  endtask
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "pkg_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        package_symbol_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "uses_package_symbol"
+        }
+
+        self.assertIn(("decode()", "ibex_pkg::alu_op_t"), package_symbol_edges)
+        self.assertIn(("decode()", "ibex_pkg::ALU_ADD"), package_symbol_edges)
+        self.assertIn(("top_task", "ibex_pkg::csr_num_e"), package_symbol_edges)
+        self.assertIn(("top_task", "ibex_pkg::CSR_MSTATUS"), package_symbol_edges)
+        self.assertNotIn(("pkg_demo", "ibex_pkg::*"), package_symbol_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
