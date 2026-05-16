@@ -10,7 +10,7 @@ This stabilization pass focused on one bounded goal:
 - remove false hubs caused by fallback parsing noise
 - ensure local Graphify extractor edits are reflected in generated artifacts
 
-This pass does **not** attempt to solve all future semantic edges such as dataflow, function calls, or UVM-specific relations.
+This pass does **not** attempt to solve all future semantic edges such as dataflow or UVM-specific relations. Function/task call extraction and package-qualified symbol usage extraction were added later and are tracked below.
 
 ## Problem Summary
 
@@ -130,21 +130,21 @@ These are intentionally **not** part of the finished stabilization checklist abo
 
 - [ ] Preserve repeated instantiations as multiedges or weighted edges
 - [x] Add function/task call extraction for helper-heavy RTL like `ibex_tracer`
-- [ ] Add package-qualified symbol/type-use extraction
+- [x] Add package-qualified symbol/type-use extraction
 - [ ] Add signal connectivity edges such as instance port bindings and simple `assign` dependencies
 - [ ] Add UVM-specific adapters using the same confidence and validation framework
 - [ ] Split future graph views by confidence tier so exploratory edges do not pollute structural graphs
 
-Function/task call extraction is now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, and parameterized-call handling without keyword noise.
+Function/task call extraction and package-qualified symbol usage extraction are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, and `ibex_pkg::...` symbol usage without import noise.
 
 ## Recommended Next Step
 
 The next highest-value extractor task is:
 
-1. package-qualified symbol/type-use extraction
+1. signal connectivity edges such as instance port bindings and simple `assign` dependencies
 
 Why:
 
-- it captures important verification context that still sits outside the structural graph
-- it complements the new call-edge coverage by explaining where enums, types, and shared constants come from
-- it fits the same precision-first validation approach used in the stabilization pass
+- it adds the next missing layer of verification context after structural hierarchy, calls, and package symbol usage
+- it helps explain how information moves between modules, not just which modules exist
+- it can still follow the same precision-first validation approach used in the stabilization pass

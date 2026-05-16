@@ -406,10 +406,10 @@ Near-term emphasis:
 - [ ] Preserve repeated instantiations as weighted edges or multiedges instead of collapsing them in the final graph
 - [ ] Add signal connectivity extraction, starting with instance port bindings and simple `assign` dependencies
 - [x] Add function/task call edges for local helper-heavy RTL modules
-- [ ] Add package-qualified symbol/type usage edges such as `ibex_pkg::...`
+- [x] Add package-qualified symbol/type usage edges such as `ibex_pkg::...`
 - [ ] Add UVM-oriented extraction adapters on top of the same confidence/scoping framework
 
-Current call-edge coverage is validated by `tests/test_graphify_verilog_calls.py` for local helper functions and task-to-function calls.
+Current call-edge and package-symbol coverage is validated by `tests/test_graphify_verilog_calls.py` for local helper functions, task-to-function calls, and package-qualified symbol/type uses.
 
 Recent Graphify application summary:
 
