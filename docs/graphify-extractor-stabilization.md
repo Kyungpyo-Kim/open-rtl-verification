@@ -131,20 +131,20 @@ These are intentionally **not** part of the finished stabilization checklist abo
 - [ ] Preserve repeated instantiations as multiedges or weighted edges
 - [x] Add function/task call extraction for helper-heavy RTL like `ibex_tracer`
 - [x] Add package-qualified symbol/type-use extraction
-- [ ] Add signal connectivity edges such as instance port bindings and simple `assign` dependencies
+- [x] Add signal connectivity edges such as instance port bindings and simple `assign` dependencies
 - [ ] Add UVM-specific adapters using the same confidence and validation framework
 - [ ] Split future graph views by confidence tier so exploratory edges do not pollute structural graphs
 
-Function/task call extraction and package-qualified symbol usage extraction are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, and `ibex_pkg::...` symbol usage without import noise.
+Function/task call extraction, package-qualified symbol usage extraction, and the first signal-connectivity pass are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, `ibex_pkg::...` symbol usage without import noise, named instance port bindings, and simple `assign` dependencies.
 
 ## Recommended Next Step
 
-The next highest-value extractor task is:
+The next highest-value extractor task is now:
 
-1. signal connectivity edges such as instance port bindings and simple `assign` dependencies
+1. extend signal connectivity beyond the basic pass, especially positional port bindings and richer procedural/dataflow patterns
 
 Why:
 
-- it adds the next missing layer of verification context after structural hierarchy, calls, and package symbol usage
-- it helps explain how information moves between modules, not just which modules exist
-- it can still follow the same precision-first validation approach used in the stabilization pass
+- the first pass now covers named instance port bindings and simple `assign` dependencies
+- positional connections, procedural assignments, and broader dataflow still matter for real verification context
+- the same precision-first validation approach should keep exploratory connectivity from polluting the structural graph

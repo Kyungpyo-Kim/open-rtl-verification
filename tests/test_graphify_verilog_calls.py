@@ -114,6 +114,64 @@ endmodule
         self.assertIn(("top_task", "ibex_pkg::CSR_MSTATUS"), package_symbol_edges)
         self.assertNotIn(("pkg_demo", "ibex_pkg::*"), package_symbol_edges)
 
+    def test_extracts_simple_assign_signal_dependencies(self):
+        source = """
+module signal_demo;
+  logic src_a;
+  logic src_b;
+  logic dst;
+
+  assign dst = src_a & src_b;
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "signal_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        signal_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("src_a", "dst"), signal_edges)
+        self.assertIn(("src_b", "dst"), signal_edges)
+
+    def test_extracts_basic_signal_connectivity_from_assigns_and_port_bindings(self):
+        source = """
+module child(input logic in_sig, output logic out_sig);
+endmodule
+
+module top(input logic a, input logic b, output logic y);
+  logic tmp;
+  child u_child (.in_sig(a), .out_sig(tmp));
+  assign y = tmp & b;
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "connectivity_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        binds_port_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "binds_port"
+        }
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("a", "u_child.in_sig"), binds_port_edges)
+        self.assertIn(("tmp", "u_child.out_sig"), binds_port_edges)
+        self.assertIn(("tmp", "y"), assign_edges)
+        self.assertIn(("b", "y"), assign_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
