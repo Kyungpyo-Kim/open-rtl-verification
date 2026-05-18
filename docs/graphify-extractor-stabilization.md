@@ -135,16 +135,16 @@ These are intentionally **not** part of the finished stabilization checklist abo
 - [ ] Add UVM-specific adapters using the same confidence and validation framework
 - [ ] Split future graph views by confidence tier so exploratory edges do not pollute structural graphs
 
-Function/task call extraction, package-qualified symbol usage extraction, and the first signal-connectivity pass are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, `ibex_pkg::...` symbol usage without import noise, named instance port bindings, and simple `assign` dependencies.
+Function/task call extraction, package-qualified symbol usage extraction, and the first signal-connectivity pass are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, `ibex_pkg::...` symbol usage without import noise, named and positional instance port bindings, and simple `assign` dependencies.
 
 ## Recommended Next Step
 
 The next highest-value extractor task is now:
 
-1. extend signal connectivity beyond the basic pass, especially positional port bindings and richer procedural/dataflow patterns
+1. extend signal connectivity beyond the basic pass, especially richer procedural/dataflow patterns
 
 Why:
 
-- the first pass now covers named instance port bindings and simple `assign` dependencies
-- positional connections, procedural assignments, and broader dataflow still matter for real verification context
+- the first pass now covers named and positional instance port bindings plus simple `assign` dependencies
+- positional connections are now covered too, but procedural assignments and broader dataflow still matter for real verification context
 - the same precision-first validation approach should keep exploratory connectivity from polluting the structural graph

@@ -409,7 +409,7 @@ Near-term emphasis:
 - [x] Add package-qualified symbol/type usage edges such as `ibex_pkg::...`
 - [ ] Add UVM-oriented extraction adapters on top of the same confidence/scoping framework
 
-Current call-edge, package-symbol, and basic signal-connectivity coverage is validated by `tests/test_graphify_verilog_calls.py` for local helper functions, task-to-function calls, package-qualified symbol/type uses, named instance port bindings, and simple `assign` dependencies.
+Current call-edge, package-symbol, and basic signal-connectivity coverage is validated by `tests/test_graphify_verilog_calls.py` for local helper functions, task-to-function calls, package-qualified symbol/type uses, named and positional instance port bindings, and simple `assign` dependencies.
 
 Recent Graphify application summary:
 

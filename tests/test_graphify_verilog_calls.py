@@ -172,6 +172,31 @@ endmodule
         self.assertIn(("tmp", "y"), assign_edges)
         self.assertIn(("b", "y"), assign_edges)
 
+    def test_extracts_basic_signal_connectivity_from_positional_port_bindings(self):
+        source = """
+module child(input logic in_a, input logic in_b, output logic out_y);
+endmodule
+
+module top(input logic a, input logic b, output logic y);
+  child u_child(a, b, y);
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "connectivity_positional_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        binds_port_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "binds_port"
+        }
+
+        self.assertIn(("a", "u_child.in_a"), binds_port_edges)
+        self.assertIn(("b", "u_child.in_b"), binds_port_edges)
+        self.assertIn(("y", "u_child.out_y"), binds_port_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
