@@ -128,7 +128,7 @@ This rule should stay true even when future work adds:
 
 These are intentionally **not** part of the finished stabilization checklist above.
 
-- [ ] Preserve repeated instantiations as multiedges or weighted edges
+- [x] Preserve repeated instantiations as weighted edges in the final graph
 - [x] Add function/task call extraction for helper-heavy RTL like `ibex_tracer`
 - [x] Add package-qualified symbol/type-use extraction
 - [x] Add signal connectivity edges such as instance port bindings and simple `assign` dependencies

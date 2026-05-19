@@ -403,7 +403,7 @@ Near-term emphasis:
 
 ## Graphify Extractor Next Backlog
 
-- [ ] Preserve repeated instantiations as weighted edges or multiedges instead of collapsing them in the final graph
+- [x] Preserve repeated instantiations as weighted edges in the final graph
 - [x] Add signal connectivity extraction, starting with instance port bindings and simple `assign` dependencies
 - [x] Add function/task call edges for local helper-heavy RTL modules
 - [x] Add package-qualified symbol/type usage edges such as `ibex_pkg::...`
