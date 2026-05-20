@@ -172,6 +172,34 @@ endmodule
         self.assertIn(("tmp", "y"), assign_edges)
         self.assertIn(("b", "y"), assign_edges)
 
+    def test_extracts_simple_procedural_signal_dependencies_without_confusing_declarations(self):
+        source = """
+module procedural_demo(input logic a, input logic b, output logic y);
+  logic tmp = 1'b0;
+
+  always_comb begin
+    tmp = a & b;
+    y <= tmp;
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "procedural_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("a", "tmp"), assign_edges)
+        self.assertIn(("b", "tmp"), assign_edges)
+        self.assertIn(("tmp", "y"), assign_edges)
+        self.assertNotIn(("logic", "tmp"), assign_edges)
+
     def test_extracts_basic_signal_connectivity_from_positional_port_bindings(self):
         source = """
 module child(input logic in_a, input logic in_b, output logic out_y);

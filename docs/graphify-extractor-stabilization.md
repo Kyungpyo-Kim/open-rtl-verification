@@ -145,6 +145,6 @@ The next highest-value extractor task is now:
 
 Why:
 
-- the first pass now covers named and positional instance port bindings plus simple `assign` dependencies
-- positional connections are now covered too, but procedural assignments and broader dataflow still matter for real verification context
+- the first pass now covers named and positional instance port bindings, simple `assign` dependencies, and basic procedural assignments
+- broader procedural/dataflow coverage still matters for real verification context, especially condition-gated updates and more complex expressions
 - the same precision-first validation approach should keep exploratory connectivity from polluting the structural graph
