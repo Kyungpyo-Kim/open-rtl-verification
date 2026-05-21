@@ -225,6 +225,33 @@ endmodule
         self.assertIn(("b", "u_child.in_b"), binds_port_edges)
         self.assertIn(("y", "u_child.out_y"), binds_port_edges)
 
+    def test_extracts_condition_signal_dependencies_from_procedural_assignments(self):
+        source = """
+module condition_demo(input logic sel, input logic a, input logic b, output logic y);
+  always_comb begin
+    if (sel)
+      y = a;
+    else
+      y = b;
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "condition_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("sel", "y"), assign_edges)
+        self.assertIn(("a", "y"), assign_edges)
+        self.assertIn(("b", "y"), assign_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
