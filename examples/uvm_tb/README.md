@@ -14,25 +14,18 @@ It intentionally stays small while still exposing the verification relationships
 - monitor to analysis port publication
 - scoreboard-style checking hook via subscriber
 - agent / env / test hierarchy
+- package-scoped UVM class collection in a single file for deterministic filelist-driven analysis
 
 ## Files
 
 - `counter_if.sv` — DUT interface bundle
-- `counter_item.sv` — sequence item
-- `counter_sequence.sv` — simple enable-driving sequence
-- `counter_driver.sv` — drives reset and enable
-- `counter_monitor.sv` — samples DUT activity
-- `counter_scoreboard.sv` — lightweight expected-count checker
-- `counter_agent.sv` — sequencer, driver, monitor assembly
-- `counter_env.sv` — environment wrapper
-- `counter_test.sv` — configures interface and starts sequence
+- `tb_counter_pkg.sv` — single package containing `counter_item`, `counter_sequence`, `counter_driver`, `counter_monitor`, `counter_scoreboard`, `counter_agent`, `counter_env`, and `counter_test`
 - `tb_counter_uvm.sv` — top module instantiating DUT and launching UVM
-- `tb_counter_pkg.sv` — package collecting UVM classes
 - `files.f` — compile-order filelist for simulator or parser entry
 
 ## Using the example
 
-From `examples/uvm_tb/`, point your simulator or analysis frontend at `files.f` so `counter_if.sv` is compiled before the package and top:
+From `examples/uvm_tb/`, point your simulator or analysis frontend at `files.f` so `counter_if.sv` is compiled before the package and top, and so Graphify sees the same deterministic ordering as a simulator:
 
 ```bash
 vlog -f files.f
