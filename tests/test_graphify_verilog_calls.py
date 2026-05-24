@@ -252,6 +252,34 @@ endmodule
         self.assertIn(("a", "y"), assign_edges)
         self.assertIn(("b", "y"), assign_edges)
 
+    def test_ignores_numeric_literal_artifacts_in_case_assignments(self):
+        source = """
+module case_demo(input logic sel, input logic a, input logic b, output logic y);
+  always_comb begin
+    case (sel)
+      1'b0: y = a;
+      default: y = b;
+    endcase
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "case_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("sel", "y"), assign_edges)
+        self.assertIn(("a", "y"), assign_edges)
+        self.assertIn(("b", "y"), assign_edges)
+        self.assertNotIn(("b0", "y"), assign_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
