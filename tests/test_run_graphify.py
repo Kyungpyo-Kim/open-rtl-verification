@@ -91,6 +91,43 @@ class RunGraphifyCliTest(unittest.TestCase):
             )
             self.assertEqual(manifest["filelist"], "files.f")
 
+    def test_manifest_only_honors_nested_uppercase_f_filelists(self):
+        with tempfile.TemporaryDirectory() as td:
+            temp_root = Path(td)
+            source_dir = temp_root / "uvm"
+            source_dir.mkdir()
+
+            (source_dir / "rtl").mkdir()
+            (source_dir / "tb").mkdir()
+            (source_dir / "rtl" / "core.sv").write_text("module core; endmodule\n", encoding="utf-8")
+            (source_dir / "tb" / "core_tb.sv").write_text("module core_tb; endmodule\n", encoding="utf-8")
+            (source_dir / "nested.f").write_text("tb/core_tb.sv\n", encoding="utf-8")
+            (source_dir / "top.f").write_text("rtl/core.sv\n-F nested.f\n", encoding="utf-8")
+
+            output_dir = temp_root / "uvm_manifest"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    str(source_dir),
+                    "--filelist",
+                    "top.f",
+                    "--manifest-only",
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            manifest = json.loads((output_dir / "sources.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["source_count"], 2)
+            self.assertEqual(manifest["relative_sources"], ["rtl/core.sv", "tb/core_tb.sv"])
+            self.assertEqual(manifest["filelist"], "top.f")
+
     def test_manifest_only_stages_git_repo_and_honors_sparse_checkout(self):
         with tempfile.TemporaryDirectory() as td:
             temp_root = Path(td)
