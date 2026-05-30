@@ -146,7 +146,7 @@ endmodule
 
 module top(input logic a, input logic b, output logic y);
   logic tmp;
-  child u_child (.in_sig(a), .out_sig(tmp));
+  child u_child (.in_sig(a & b), .out_sig(tmp));
   assign y = tmp & b;
 endmodule
 """
@@ -168,6 +168,7 @@ endmodule
         }
 
         self.assertIn(("a", "u_child.in_sig"), binds_port_edges)
+        self.assertIn(("b", "u_child.in_sig"), binds_port_edges)
         self.assertIn(("tmp", "u_child.out_sig"), binds_port_edges)
         self.assertIn(("tmp", "y"), assign_edges)
         self.assertIn(("b", "y"), assign_edges)
@@ -206,7 +207,7 @@ module child(input logic in_a, input logic in_b, output logic out_y);
 endmodule
 
 module top(input logic a, input logic b, output logic y);
-  child u_child(a, b, y);
+  child u_child(a & b, b, y);
 endmodule
 """
         with tempfile.TemporaryDirectory() as td:
@@ -222,6 +223,7 @@ endmodule
         }
 
         self.assertIn(("a", "u_child.in_a"), binds_port_edges)
+        self.assertIn(("b", "u_child.in_a"), binds_port_edges)
         self.assertIn(("b", "u_child.in_b"), binds_port_edges)
         self.assertIn(("y", "u_child.out_y"), binds_port_edges)
 
