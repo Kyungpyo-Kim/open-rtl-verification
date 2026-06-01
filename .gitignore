@@ -2,6 +2,7 @@
 .opencode/
 scripts/__pycache__/
 tests/__pycache__/
+TODO.md
 
 # Ignore ad hoc Graphify run outputs, keep curated sample artifacts tracked.
 examples/graphify-out/
