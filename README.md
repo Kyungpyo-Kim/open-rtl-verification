@@ -195,8 +195,9 @@ The workflow now also supports:
 
 - public git repo staging for open RTL / UVM targets
 - sparse checkout for large repositories
-- filelist-aware source selection
+- filelist-aware source selection, including nested `-F` filelists
 - deterministic `sources.json` manifest generation for Graphify
+- explicit Graphify source selection via `--graphify-source {auto,vendor,installed}`
 
 Example, larger open RTL target:
 
@@ -206,6 +207,17 @@ python3 scripts/run_graphify.py \
   --repo-ref master \
   --sparse-path rtl \
   --output-dir graph/graphify_outputs/ibex_rtl
+```
+
+Example, UVM filelist-driven manifest generation with nested `-F` support:
+
+```bash
+python3 scripts/run_graphify.py \
+  examples/uvm_tb \
+  --filelist files.f \
+  --manifest-only \
+  --graphify-source vendor \
+  --output-dir graph/graphify_outputs/uvm_manifest
 ```
 
 ### 2. Testbench Analysis
