@@ -24,6 +24,14 @@ These manifests and Graphify artifacts are checked in under `graph/graphify_outp
 
 ## Example commands
 
+### 0) Reuse a checked-in preset directly
+
+```bash
+python3 scripts/run_graphify.py --target ibex_rtl --manifest-only
+```
+
+Presets come from `configs/open_targets.json` and fill `repo_url`, `repo_ref`, sparse paths, and the default output directory. Explicit CLI flags still win.
+
 ### 1) Local UVM example with filelist ordering
 
 ```bash

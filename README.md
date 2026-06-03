@@ -197,7 +197,14 @@ The workflow now also supports:
 - sparse checkout for large repositories
 - filelist-aware source selection, including nested `-F` filelists
 - deterministic `sources.json` manifest generation for Graphify
+- named open-target presets from `configs/open_targets.json`
 - explicit Graphify source selection via `--graphify-source {auto,vendor,installed}`
+
+Preset-driven example:
+
+```bash
+python3 scripts/run_graphify.py --target ibex_rtl --manifest-only
+```
 
 Example, larger open RTL target:
 

@@ -170,6 +170,51 @@ class RunGraphifyCliTest(unittest.TestCase):
             self.assertEqual(manifest["repo_ref"], "HEAD")
             self.assertEqual(manifest["repo_url"], str(repo_dir))
 
+    def test_manifest_only_accepts_named_open_target_preset(self):
+        with tempfile.TemporaryDirectory() as td:
+            output_dir = Path(td) / "ibex_manifest"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--target",
+                    "ibex_rtl",
+                    "--manifest-only",
+                    "--output-dir",
+                    str(output_dir),
+                    "--staging-root",
+                    str(Path(td) / "staging"),
+                ],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            manifest = json.loads((output_dir / "sources.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["repo_url"], "https://github.com/lowRISC/ibex.git")
+            self.assertEqual(manifest["repo_ref"], "master")
+            self.assertTrue(all(path.startswith("rtl/") for path in manifest["relative_sources"]))
+
+    def test_cli_reports_unknown_open_target(self):
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(SCRIPT),
+                "--target",
+                "does_not_exist",
+                "--manifest-only",
+            ],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        self.assertEqual(completed.returncode, 1)
+        self.assertIn("OPEN_TARGET_NOT_FOUND", completed.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

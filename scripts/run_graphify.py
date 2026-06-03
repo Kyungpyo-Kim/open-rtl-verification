@@ -17,7 +17,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Any, Iterable, Sequence
 from urllib.parse import urlparse
 
 DEFAULT_EXTENSIONS = (".v", ".vh", ".sv", ".svh")
@@ -38,13 +38,18 @@ DEFAULT_EXCLUDES = (
 FILELIST_VAR_RE = re.compile(r"\$\(([^)]+)\)|\$([A-Za-z_][A-Za-z0-9_]*)")
 REPO_ROOT = Path(__file__).resolve().parent.parent
 VENDORED_GRAPHIFY_ROOT = REPO_ROOT / "vendor" / "graphify"
+OPEN_TARGETS_CONFIG = REPO_ROOT / "configs" / "open_targets.json"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Collect sources, write a Graphify manifest, and generate Graphify artifacts."
     )
-    parser.add_argument("input", help="RTL/TB/UVM source directory or git URL to analyze")
+    parser.add_argument("input", nargs="?", help="RTL/TB/UVM source directory or git URL to analyze")
+    parser.add_argument(
+        "--target",
+        help="Named preset from configs/open_targets.json. Fills input/output/ref/sparse settings unless explicitly overridden.",
+    )
     parser.add_argument(
         "--output-dir",
         default="graph/graphify_outputs/latest",
@@ -99,6 +104,39 @@ def parse_args() -> argparse.Namespace:
         help="Choose Graphify import source. 'auto' prefers the vendored fork when present.",
     )
     return parser.parse_args()
+
+
+def load_open_target(name: str, config_path: Path = OPEN_TARGETS_CONFIG) -> dict[str, Any]:
+    if not config_path.is_file():
+        raise RuntimeError(f"OPEN_TARGETS_CONFIG_NOT_FOUND: {config_path}")
+
+    try:
+        payload = json.loads(config_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(f"OPEN_TARGETS_CONFIG_INVALID: {config_path}: {exc}") from exc
+
+    for target in payload.get("targets", []):
+        if target.get("name") == name:
+            return target
+
+    available = ", ".join(sorted(target.get("name", "<unnamed>") for target in payload.get("targets", [])))
+    raise RuntimeError(f"OPEN_TARGET_NOT_FOUND: {name}. Available: {available}")
+
+
+def apply_open_target_defaults(args: argparse.Namespace) -> argparse.Namespace:
+    if not args.target:
+        return args
+
+    target = load_open_target(args.target)
+    if args.input is None:
+        args.input = target.get("repo_url", args.input)
+    if args.output_dir == "graph/graphify_outputs/latest":
+        args.output_dir = target.get("output_dir", args.output_dir)
+    if args.repo_ref == "HEAD":
+        args.repo_ref = target.get("repo_ref", args.repo_ref)
+    if not args.sparse_path:
+        args.sparse_path = list(target.get("sparse_paths", []))
+    return args
 
 
 def configure_graphify_import(source: str) -> str:
@@ -313,7 +351,16 @@ def run_graphify(manifest_path: Path, input_root: Path, output_dir: Path, source
 
 
 def main() -> int:
-    args = parse_args()
+    try:
+        args = apply_open_target_defaults(parse_args())
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    if not args.input:
+        print("INPUT_REQUIRED: provide an input path/git URL or use --target with a preset repo_url", file=sys.stderr)
+        return 2
+
     try:
         graphify_source = configure_graphify_import(args.graphify_source)
     except RuntimeError as exc:
