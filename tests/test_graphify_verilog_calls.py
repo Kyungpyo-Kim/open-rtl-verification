@@ -282,6 +282,36 @@ endmodule
         self.assertIn(("b", "y"), assign_edges)
         self.assertNotIn(("b0", "y"), assign_edges)
 
+    def test_uses_base_signal_for_indexed_assignment_lhs(self):
+        source = """
+module indexed_demo(input logic [1:0] sel, input logic a, output logic y);
+  logic [3:0] mem;
+
+  always_comb begin
+    mem[sel] = a;
+    y = mem[sel];
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "indexed_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("sel", "mem"), assign_edges)
+        self.assertIn(("a", "mem"), assign_edges)
+        self.assertIn(("mem", "y"), assign_edges)
+        self.assertIn(("sel", "y"), assign_edges)
+        self.assertNotIn(("a", "sel"), assign_edges)
+        self.assertNotIn(("mem", "sel"), assign_edges)
+
 
 if __name__ == "__main__":
     unittest.main()
