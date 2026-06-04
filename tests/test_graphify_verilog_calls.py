@@ -312,6 +312,57 @@ endmodule
         self.assertNotIn(("a", "sel"), assign_edges)
         self.assertNotIn(("mem", "sel"), assign_edges)
 
+    def test_extracts_uvm_class_hierarchy_and_methods_from_package(self):
+        source = """
+package demo_pkg;
+  import uvm_pkg::*;
+
+  class demo_item extends uvm_sequence_item;
+    function new(string name = "demo_item");
+      super.new(name);
+    endfunction
+  endclass
+
+  class demo_test extends uvm_test;
+    function void build_phase(uvm_phase phase);
+      demo_item item;
+      super.build_phase(phase);
+      item = demo_item::type_id::create("item");
+    endfunction
+  endclass
+endpackage
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "demo_pkg.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        contains_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "contains"
+        }
+        inherits_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "inherits"
+        }
+        package_symbol_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "uses_package_symbol"
+        }
+
+        self.assertIn(("demo_pkg", "demo_item"), contains_edges)
+        self.assertIn(("demo_pkg", "demo_test"), contains_edges)
+        self.assertIn(("demo_test", "build_phase()"), contains_edges)
+        self.assertIn(("demo_item", "new()"), contains_edges)
+        self.assertIn(("demo_item", "uvm_sequence_item"), inherits_edges)
+        self.assertIn(("demo_test", "uvm_test"), inherits_edges)
+        self.assertIn(("build_phase()", "demo_item::type_id"), package_symbol_edges)
+
+
 
 if __name__ == "__main__":
     unittest.main()
