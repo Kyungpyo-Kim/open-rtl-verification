@@ -1,4 +1,6 @@
+import importlib.util
 import json
+from unittest import mock
 import subprocess
 import sys
 import tempfile
@@ -214,6 +216,38 @@ class RunGraphifyCliTest(unittest.TestCase):
 
         self.assertEqual(completed.returncode, 1)
         self.assertIn("OPEN_TARGET_NOT_FOUND", completed.stderr)
+
+    def test_render_graph_png_invokes_helper_script(self):
+        with tempfile.TemporaryDirectory() as td:
+            output_dir = Path(td)
+            (output_dir / "graph.html").write_text("<html></html>\n", encoding="utf-8")
+
+            spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+            self.assertIsNotNone(spec)
+            self.assertIsNotNone(spec.loader)
+            run_graphify = importlib.util.module_from_spec(spec)
+            sys.modules["run_graphify"] = run_graphify
+            spec.loader.exec_module(run_graphify)
+
+            with mock.patch.object(run_graphify.subprocess, "run") as mocked_run:
+                mocked_run.return_value = mock.Mock(returncode=0)
+
+                try:
+                    rc = run_graphify.render_graph_png(output_dir)
+                finally:
+                    sys.modules.pop("run_graphify", None)
+
+            self.assertEqual(rc, 0)
+            mocked_run.assert_called_once_with(
+                [
+                    sys.executable,
+                    str(REPO_ROOT / "scripts" / "render_html_to_png.py"),
+                    str(output_dir / "graph.html"),
+                    "--output",
+                    str(output_dir / "graph.png"),
+                ],
+                check=False,
+            )
 
 
 if __name__ == "__main__":

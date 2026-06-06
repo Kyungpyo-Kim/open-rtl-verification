@@ -39,6 +39,7 @@ FILELIST_VAR_RE = re.compile(r"\$\(([^)]+)\)|\$([A-Za-z_][A-Za-z0-9_]*)")
 REPO_ROOT = Path(__file__).resolve().parent.parent
 VENDORED_GRAPHIFY_ROOT = REPO_ROOT / "vendor" / "graphify"
 OPEN_TARGETS_CONFIG = REPO_ROOT / "configs" / "open_targets.json"
+RENDER_HTML_TO_PNG = REPO_ROOT / "scripts" / "render_html_to_png.py"
 
 
 def parse_args() -> argparse.Namespace:
@@ -102,6 +103,11 @@ def parse_args() -> argparse.Namespace:
         choices=("auto", "vendor", "installed"),
         default="auto",
         help="Choose Graphify import source. 'auto' prefers the vendored fork when present.",
+    )
+    parser.add_argument(
+        "--render-png",
+        action="store_true",
+        help="Also render graph.html to graph.png when Graphify output generation succeeds.",
     )
     return parser.parse_args()
 
@@ -350,6 +356,19 @@ def run_graphify(manifest_path: Path, input_root: Path, output_dir: Path, source
     return 0
 
 
+def render_graph_png(output_dir: Path) -> int:
+    html_path = output_dir / "graph.html"
+    png_path = output_dir / "graph.png"
+    if not html_path.is_file():
+        print(f"GRAPH_HTML_NOT_FOUND: {html_path}", file=sys.stderr)
+        return 1
+    completed = subprocess.run(
+        [sys.executable, str(RENDER_HTML_TO_PNG), str(html_path), "--output", str(png_path)],
+        check=False,
+    )
+    return completed.returncode
+
+
 def main() -> int:
     try:
         args = apply_open_target_defaults(parse_args())
@@ -409,7 +428,17 @@ def main() -> int:
     if args.manifest_only:
         return 0
 
-    return run_graphify(manifest_path, input_root, output_dir, sources)
+    graphify_rc = run_graphify(manifest_path, input_root, output_dir, sources)
+    if graphify_rc != 0:
+        return graphify_rc
+
+    if args.render_png:
+        png_rc = render_graph_png(output_dir)
+        if png_rc != 0:
+            return png_rc
+        print(f"PNG_WRITTEN: {output_dir / 'graph.png'}")
+
+    return 0
 
 
 if __name__ == "__main__":

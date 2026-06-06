@@ -38,6 +38,7 @@ Presets come from `configs/open_targets.json` and fill `repo_url`, `repo_ref`, s
 python3 scripts/run_graphify.py \
   examples/uvm_tb \
   --filelist files.f \
+  --render-png \
   --output-dir graph/graphify_outputs/uvm_example
 ```
 
@@ -75,7 +76,7 @@ graph/graphify_outputs/<target>/
 └── graph.png
 ```
 
-`graph.png` is a debug screenshot captured from `graph.html` using `scripts/render_html_to_png.py`.
+`graph.png` is a debug screenshot captured from `graph.html`. Use `--render-png` to generate it automatically, or call `scripts/render_html_to_png.py` directly if you want to rerender an existing HTML artifact.
 
 ## Notes
 

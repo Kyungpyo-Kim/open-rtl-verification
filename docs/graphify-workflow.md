@@ -85,13 +85,19 @@ graph/graphify_outputs/latest/
 
 ## Debugging support
 
-If Graphify emits HTML artifacts and you want a static screenshot for review, use:
+If you want the main workflow to also emit a static screenshot, add `--render-png`. To rerender an existing HTML artifact manually, use:
+
+```bash
+python3 scripts/run_graphify.py examples/uvm_tb --render-png
+```
+
+or:
 
 ```bash
 python3 scripts/render_html_to_png.py path/to/graphify-output.html --output path/to/graphify-output.png
 ```
 
-This is a lightweight debugging helper only, not part of the main workflow. If Chromium is not installed system-wide, a Playwright-managed browser under `~/.cache/ms-playwright/` is also supported.
+If Chromium is not installed system-wide, a Playwright-managed browser under `~/.cache/ms-playwright/` is also supported.
 
 ## Next reading
 
