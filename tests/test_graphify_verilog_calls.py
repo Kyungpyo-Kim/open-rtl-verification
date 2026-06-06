@@ -362,6 +362,46 @@ endpackage
         self.assertIn(("demo_test", "uvm_test"), inherits_edges)
         self.assertIn(("build_phase()", "demo_item::type_id"), package_symbol_edges)
 
+    def test_does_not_duplicate_uvm_package_methods_at_file_scope(self):
+        source = """
+package demo_pkg;
+  class demo_test;
+    function void helper();
+    endfunction
+
+    function void build_phase();
+      helper();
+    endfunction
+  endclass
+endpackage
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "demo_pkg.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        helper_nodes = [node_id for node_id, label in labels.items() if label == "helper()"]
+        build_phase_nodes = [node_id for node_id, label in labels.items() if label == "build_phase()"]
+        contains_edges = [
+            (edge["source"], edge["target"])
+            for edge in result["edges"]
+            if edge["relation"] == "contains"
+        ]
+        call_edges = [
+            (edge["source"], edge["target"])
+            for edge in result["edges"]
+            if edge["relation"] == "calls"
+        ]
+
+        self.assertEqual(len(helper_nodes), 1)
+        self.assertEqual(len(build_phase_nodes), 1)
+        self.assertIn(
+            next(node_id for node_id, label in labels.items() if label == "demo_test"),
+            {source for source, _target in contains_edges},
+        )
+        self.assertIn((build_phase_nodes[0], helper_nodes[0]), call_edges)
+        self.assertFalse(any(labels[source] == "demo_pkg.sv" and target in set(helper_nodes + build_phase_nodes) for source, target in contains_edges))
 
 
 if __name__ == "__main__":
