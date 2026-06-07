@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str((Path(__file__).resolve().parents[1] / "vendor" / "graphify").resolve()))
 
-from graphify.extract import extract
+from graphify.extract import extract, extract_verilog
 
 
 class GraphifyVerilogCallExtractionTest(unittest.TestCase):
@@ -402,6 +402,29 @@ endpackage
         )
         self.assertIn((build_phase_nodes[0], helper_nodes[0]), call_edges)
         self.assertFalse(any(labels[source] == "demo_pkg.sv" and target in set(helper_nodes + build_phase_nodes) for source, target in contains_edges))
+
+    def test_extracts_complex_uvm_package_example_class_structure(self):
+        result = extract_verilog(Path("examples/uvm_tb/tb_counter_pkg.sv"))
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        contains_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "contains"
+        }
+        inherits_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "inherits"
+        }
+
+        self.assertIn(("tb_counter_pkg", "counter_driver"), contains_edges)
+        self.assertIn(("tb_counter_pkg", "counter_env"), contains_edges)
+        self.assertIn(("tb_counter_pkg", "counter_test"), contains_edges)
+        self.assertIn(("counter_driver", "build_phase()"), contains_edges)
+        self.assertIn(("counter_env", "connect_phase()"), contains_edges)
+        self.assertIn(("counter_test", "run_phase"), contains_edges)
+        self.assertIn(("counter_test", "uvm_test"), inherits_edges)
 
 
 if __name__ == "__main__":
