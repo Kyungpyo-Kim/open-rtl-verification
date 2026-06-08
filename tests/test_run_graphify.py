@@ -217,6 +217,24 @@ class RunGraphifyCliTest(unittest.TestCase):
         self.assertEqual(completed.returncode, 1)
         self.assertIn("OPEN_TARGET_NOT_FOUND", completed.stderr)
 
+    def test_render_graph_png_returns_error_when_graph_html_is_missing(self):
+        with tempfile.TemporaryDirectory() as td:
+            output_dir = Path(td)
+
+            spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+            self.assertIsNotNone(spec)
+            self.assertIsNotNone(spec.loader)
+            run_graphify = importlib.util.module_from_spec(spec)
+            sys.modules["run_graphify"] = run_graphify
+            spec.loader.exec_module(run_graphify)
+
+            try:
+                rc = run_graphify.render_graph_png(output_dir)
+            finally:
+                sys.modules.pop("run_graphify", None)
+
+            self.assertEqual(rc, 1)
+
     def test_render_graph_png_invokes_helper_script(self):
         with tempfile.TemporaryDirectory() as td:
             output_dir = Path(td)
