@@ -426,6 +426,89 @@ endpackage
         self.assertIn(("counter_test", "run_phase"), contains_edges)
         self.assertIn(("counter_test", "uvm_test"), inherits_edges)
 
+    def test_extracts_basic_uvm_config_and_tlm_adapters(self):
+        source = """
+package demo_pkg;
+  class demo_driver extends uvm_driver;
+    virtual demo_if vif;
+
+    function void build_phase(uvm_phase phase);
+      if (!uvm_config_db#(virtual demo_if)::get(this, "", "vif", vif)) begin
+      end
+    endfunction
+  endclass
+
+  class demo_agent extends uvm_component;
+    function void connect_phase(uvm_phase phase);
+      driver.seq_item_port.connect(sequencer.seq_item_export);
+      monitor.ap.connect(scoreboard.analysis_export);
+    endfunction
+  endclass
+endpackage
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "demo_pkg.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        config_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "uvm_config_get"
+        }
+        typed_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "typed_as"
+        }
+        connect_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "connects_to"
+        }
+
+        self.assertIn(("build_phase()", "config::vif"), config_edges)
+        self.assertIn(("config::vif", "virtual demo_if"), typed_edges)
+        self.assertIn(("driver.seq_item_port", "sequencer.seq_item_export"), connect_edges)
+        self.assertIn(("monitor.ap", "scoreboard.analysis_export"), connect_edges)
+
+    def test_extracts_uvm_sequence_start_and_run_test_adapters(self):
+        source = """
+package demo_pkg;
+  class demo_test extends uvm_test;
+    task run_phase(uvm_phase phase);
+      seq.start(env.agent.sequencer);
+    endtask
+  endclass
+endpackage
+
+module demo_top;
+  initial begin
+    run_test("demo_test");
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "demo_top.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        start_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "starts_on"
+        }
+        run_test_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "runs_test"
+        }
+
+        self.assertIn(("seq", "env.agent.sequencer"), start_edges)
+        self.assertIn(("demo_top", "demo_test"), run_test_edges)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -426,9 +426,9 @@ Near-term emphasis:
 - [x] Add signal connectivity extraction, starting with instance port bindings, simple `assign` dependencies, and basic procedural assignments
 - [x] Add function/task call edges for local helper-heavy RTL modules
 - [x] Add package-qualified symbol/type usage edges such as `ibex_pkg::...`
-- [ ] Add UVM-oriented extraction adapters on top of the same confidence/scoping framework
+- [x] Add basic UVM-oriented extraction adapters for `uvm_config_db`, TLM `connect`, `sequence.start`, and `run_test`
 
-Current call-edge, package-symbol, and basic signal-connectivity coverage is validated by `tests/test_graphify_verilog_calls.py` for local helper functions, task-to-function calls, package-qualified symbol/type uses, named and positional instance port bindings, simple `assign` dependencies, and basic procedural assignments including condition-gated dependencies without declaration noise.
+Current call-edge, package-symbol, basic signal-connectivity, and early UVM-adapter coverage is validated by `tests/test_graphify_verilog_calls.py` for local helper functions, task-to-function calls, package-qualified symbol/type uses, named and positional instance port bindings, simple `assign` dependencies, basic procedural assignments including condition-gated dependencies without declaration noise, plus `uvm_config_db` access, TLM `connect`, `sequence.start`, and `run_test` flows.
 
 Recent Graphify application summary:
 
