@@ -1,3 +1,4 @@
+import argparse
 import importlib.util
 import json
 from unittest import mock
@@ -198,6 +199,32 @@ class RunGraphifyCliTest(unittest.TestCase):
             self.assertEqual(manifest["repo_url"], "https://github.com/lowRISC/ibex.git")
             self.assertEqual(manifest["repo_ref"], "master")
             self.assertTrue(all(path.startswith("rtl/") for path in manifest["relative_sources"]))
+
+    def test_apply_open_target_defaults_uses_opentitan_preset_values(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        args = argparse.Namespace(
+            input=None,
+            target="opentitan_uart_dv",
+            output_dir="graph/graphify_outputs/latest",
+            repo_ref="HEAD",
+            sparse_path=[],
+        )
+
+        try:
+            updated = run_graphify.apply_open_target_defaults(args)
+        finally:
+            sys.modules.pop("run_graphify", None)
+
+        self.assertEqual(updated.input, "https://github.com/lowRISC/opentitan.git")
+        self.assertEqual(updated.output_dir, "graph/graphify_outputs/opentitan_uart_dv")
+        self.assertEqual(updated.repo_ref, "master")
+        self.assertEqual(updated.sparse_path, ["hw/ip/uart", "hw/dv/sv"])
 
     def test_cli_reports_unknown_open_target(self):
         completed = subprocess.run(
