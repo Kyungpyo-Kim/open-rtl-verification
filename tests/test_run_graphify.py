@@ -226,6 +226,25 @@ class RunGraphifyCliTest(unittest.TestCase):
         self.assertEqual(updated.repo_ref, "master")
         self.assertEqual(updated.sparse_path, ["hw/ip/uart", "hw/dv/sv"])
 
+    def test_open_target_config_entries_are_unique_and_complete(self):
+        config = json.loads((REPO_ROOT / "configs" / "open_targets.json").read_text(encoding="utf-8"))
+        targets = config["targets"]
+
+        self.assertGreaterEqual(len(targets), 1)
+
+        names = [target["name"] for target in targets]
+        self.assertEqual(len(names), len(set(names)))
+
+        for target in targets:
+            self.assertTrue(target["name"])
+            self.assertTrue(target["description"])
+            self.assertTrue(target["repo_url"].startswith("https://github.com/"))
+            self.assertTrue(target["repo_ref"])
+            self.assertTrue(target["output_dir"].startswith("graph/graphify_outputs/"))
+            self.assertIsInstance(target["sparse_paths"], list)
+            self.assertGreaterEqual(len(target["sparse_paths"]), 1)
+            self.assertTrue(all(path and not path.startswith("/") for path in target["sparse_paths"]))
+
     def test_cli_reports_unknown_open_target(self):
         completed = subprocess.run(
             [
