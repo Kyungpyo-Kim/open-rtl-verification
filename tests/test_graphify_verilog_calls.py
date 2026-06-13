@@ -312,6 +312,33 @@ endmodule
         self.assertNotIn(("a", "sel"), assign_edges)
         self.assertNotIn(("mem", "sel"), assign_edges)
 
+    def test_extracts_procedural_assignments_inside_for_loops(self):
+        source = """
+module loop_demo(input logic [1:0] in, output logic [1:0] out);
+  integer i;
+
+  always_comb begin
+    for (i = 0; i < 2; i++)
+      out[i] = in[i];
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "loop_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("in", "out"), assign_edges)
+        self.assertNotIn(("out", "i"), assign_edges)
+        self.assertNotIn(("in", "i"), assign_edges)
+
     def test_extracts_uvm_class_hierarchy_and_methods_from_package(self):
         source = """
 package demo_pkg;
