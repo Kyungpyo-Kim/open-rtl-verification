@@ -339,6 +339,31 @@ endmodule
         self.assertNotIn(("out", "i"), assign_edges)
         self.assertNotIn(("in", "i"), assign_edges)
 
+    def test_extracts_procedural_assignments_inside_while_loops(self):
+        source = """
+module while_demo(input logic cond, input logic a, output logic y);
+  always_comb begin
+    while (cond)
+      y = a;
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "while_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("cond", "y"), assign_edges)
+        self.assertIn(("a", "y"), assign_edges)
+        self.assertNotIn(("y", "cond"), assign_edges)
+
     def test_extracts_uvm_class_hierarchy_and_methods_from_package(self):
         source = """
 package demo_pkg;
