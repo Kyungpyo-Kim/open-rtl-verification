@@ -364,6 +364,56 @@ endmodule
         self.assertIn(("a", "y"), assign_edges)
         self.assertNotIn(("y", "cond"), assign_edges)
 
+    def test_extracts_procedural_assignments_inside_repeat_loops_without_keyword_noise(self):
+        source = """
+module repeat_demo(input logic a, output logic y);
+  always_comb begin
+    repeat (2)
+      y = a;
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "repeat_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("a", "y"), assign_edges)
+        self.assertNotIn(("repeat", "y"), assign_edges)
+
+    def test_extracts_procedural_assignments_inside_do_while_loops_without_keyword_noise(self):
+        source = """
+module do_demo(input logic cond, input logic a, output logic y);
+  always_comb begin
+    do
+      y = a;
+    while (cond);
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "do_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("a", "y"), assign_edges)
+        self.assertNotIn(("do", "y"), assign_edges)
+
+
     def test_extracts_uvm_class_hierarchy_and_methods_from_package(self):
         source = """
 package demo_pkg;
