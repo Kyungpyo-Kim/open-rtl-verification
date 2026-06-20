@@ -388,6 +388,31 @@ endmodule
         self.assertIn(("a", "y"), assign_edges)
         self.assertNotIn(("repeat", "y"), assign_edges)
 
+    def test_extracts_procedural_assignments_inside_foreach_loops_without_index_noise(self):
+        source = """
+module foreach_demo(input logic [1:0] a, output logic [1:0] y);
+  always_comb begin
+    foreach (a[i])
+      y[i] = a[i];
+  end
+endmodule
+"""
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "foreach_demo.sv"
+            path.write_text(source, encoding="utf-8")
+            result = extract([path])
+
+        labels = {node["id"]: node["label"] for node in result["nodes"]}
+        assign_edges = {
+            (labels[edge["source"]], labels[edge["target"]])
+            for edge in result["edges"]
+            if edge["relation"] == "assigns_to"
+        }
+
+        self.assertIn(("a", "y"), assign_edges)
+        self.assertNotIn(("i", "y"), assign_edges)
+        self.assertNotIn(("a", "i"), assign_edges)
+
     def test_extracts_procedural_assignments_inside_do_while_loops_without_keyword_noise(self):
         source = """
 module do_demo(input logic cond, input logic a, output logic y);
