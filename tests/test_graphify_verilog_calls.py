@@ -435,6 +435,7 @@ endmodule
             if edge["relation"] == "assigns_to"
         }
 
+        self.assertIn(("cond", "y"), assign_edges)
         self.assertIn(("a", "y"), assign_edges)
         self.assertNotIn(("do", "y"), assign_edges)
 
