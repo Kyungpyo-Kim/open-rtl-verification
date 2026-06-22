@@ -199,6 +199,7 @@ The workflow now also supports:
 - deterministic `sources.json` manifest generation for Graphify
 - named open-target presets from `configs/open_targets.json`
 - explicit Graphify source selection via `--graphify-source {auto,vendor,installed}`
+- optional confidence-tier view selection via `--confidence-view {all,extracted}` to keep structural exports free of exploratory edges
 
 Preset-driven example:
 

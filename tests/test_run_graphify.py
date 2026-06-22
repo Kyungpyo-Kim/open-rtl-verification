@@ -1,6 +1,7 @@
 import argparse
 import importlib.util
 import json
+import networkx as nx
 from unittest import mock
 import subprocess
 import sys
@@ -312,6 +313,32 @@ class RunGraphifyCliTest(unittest.TestCase):
                 ],
                 check=False,
             )
+
+    def test_filter_graph_by_confidence_view_keeps_only_extracted_edges(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        graph = nx.DiGraph()
+        graph.add_node("keep")
+        graph.add_node("keep_target")
+        graph.add_node("drop")
+        graph.add_node("drop_target")
+        graph.add_edge("keep", "keep_target", confidence="EXTRACTED")
+        graph.add_edge("drop", "drop_target", confidence="INFERRED")
+
+        try:
+            filtered = run_graphify.filter_graph_by_confidence_view(graph, "extracted")
+        finally:
+            sys.modules.pop("run_graphify", None)
+
+        self.assertTrue(filtered.has_edge("keep", "keep_target"))
+        self.assertFalse(filtered.has_edge("drop", "drop_target"))
+        self.assertNotIn("drop", filtered.nodes)
+        self.assertNotIn("drop_target", filtered.nodes)
 
 
 if __name__ == "__main__":

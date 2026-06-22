@@ -20,6 +20,8 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 from urllib.parse import urlparse
 
+import networkx as nx
+
 DEFAULT_EXTENSIONS = (".v", ".vh", ".sv", ".svh")
 DEFAULT_EXCLUDES = (
     ".git",
@@ -103,6 +105,12 @@ def parse_args() -> argparse.Namespace:
         choices=("auto", "vendor", "installed"),
         default="auto",
         help="Choose Graphify import source. 'auto' prefers the vendored fork when present.",
+    )
+    parser.add_argument(
+        "--confidence-view",
+        choices=("all", "extracted"),
+        default="all",
+        help="Choose whether generated graph artifacts include all edges or only EXTRACTED-confidence edges.",
     )
     parser.add_argument(
         "--render-png",
@@ -299,7 +307,33 @@ def write_manifest(
     return manifest_path
 
 
-def run_graphify(manifest_path: Path, input_root: Path, output_dir: Path, sources: Sequence[Path]) -> int:
+def filter_graph_by_confidence_view(graph: nx.Graph, confidence_view: str) -> nx.Graph:
+    if confidence_view == "all":
+        return graph
+    if confidence_view != "extracted":
+        raise ValueError(f"UNSUPPORTED_CONFIDENCE_VIEW: {confidence_view}")
+
+    filtered = graph.copy()
+    filtered.remove_edges_from(
+        [
+            (u, v)
+            for u, v, data in filtered.edges(data=True)
+            if data.get("confidence", "EXTRACTED") != "EXTRACTED"
+        ]
+    )
+    isolates = list(nx.isolates(filtered))
+    if isolates:
+        filtered.remove_nodes_from(isolates)
+    return filtered
+
+
+def run_graphify(
+    manifest_path: Path,
+    input_root: Path,
+    output_dir: Path,
+    sources: Sequence[Path],
+    confidence_view: str = "all",
+) -> int:
     try:
         from graphify.extract import extract
         from graphify.build import build_from_json
@@ -321,6 +355,7 @@ def run_graphify(manifest_path: Path, input_root: Path, output_dir: Path, source
 
     extraction = extract(code_sources)
     graph = build_from_json(extraction)
+    graph = filter_graph_by_confidence_view(graph, confidence_view)
     communities = cluster(graph)
     cohesion = score_all(graph, communities)
     labels = {cid: f"Community {cid}" for cid in communities}
@@ -424,11 +459,12 @@ def main() -> int:
     print(f"MANIFEST_WRITTEN: {manifest_path}")
     print(f"SOURCE_COUNT: {len(sources)}")
     print(f"GRAPHIFY_SOURCE: {graphify_source}")
+    print(f"CONFIDENCE_VIEW: {args.confidence_view}")
 
     if args.manifest_only:
         return 0
 
-    graphify_rc = run_graphify(manifest_path, input_root, output_dir, sources)
+    graphify_rc = run_graphify(manifest_path, input_root, output_dir, sources, confidence_view=args.confidence_view)
     if graphify_rc != 0:
         return graphify_rc
 
