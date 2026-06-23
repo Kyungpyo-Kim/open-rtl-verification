@@ -227,6 +227,32 @@ class RunGraphifyCliTest(unittest.TestCase):
         self.assertEqual(updated.repo_ref, "master")
         self.assertEqual(updated.sparse_path, ["hw/ip/uart", "hw/dv/sv"])
 
+    def test_apply_open_target_defaults_keeps_explicit_cli_overrides(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        args = argparse.Namespace(
+            input="examples/uvm_tb",
+            target="opentitan_uart_dv",
+            output_dir="graph/graphify_outputs/custom_target",
+            repo_ref="feature-branch",
+            sparse_path=["custom/path"],
+        )
+
+        try:
+            updated = run_graphify.apply_open_target_defaults(args)
+        finally:
+            sys.modules.pop("run_graphify", None)
+
+        self.assertEqual(updated.input, "examples/uvm_tb")
+        self.assertEqual(updated.output_dir, "graph/graphify_outputs/custom_target")
+        self.assertEqual(updated.repo_ref, "feature-branch")
+        self.assertEqual(updated.sparse_path, ["custom/path"])
+
     def test_open_target_config_entries_are_unique_and_complete(self):
         config = json.loads((REPO_ROOT / "configs" / "open_targets.json").read_text(encoding="utf-8"))
         targets = config["targets"]
