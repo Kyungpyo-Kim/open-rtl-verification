@@ -252,8 +252,8 @@ def parse_filelist(filelist_path: Path, root: Path, extensions: Iterable[str]) -
             if not line or line.startswith("#") or line.startswith("//"):
                 continue
             line = substitute_vars(line)
-            if line.startswith(("-f ", "-F ")):
-                nested = line[2:].strip()
+            if re.match(r"-[fF]\s+", line):
+                nested = re.sub(r"^-[fF]\s+", "", line, count=1)
                 nested_path = (current.parent / nested).resolve()
                 walk(nested_path)
                 continue
