@@ -16,6 +16,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 from urllib.parse import urlparse
@@ -78,6 +79,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--filelist",
         help="Optional filelist (.f) to honor for ordering and exact source selection",
+    )
+    parser.add_argument(
+        "--core-file",
+        help="Optional FuseSoC .core file to resolve into an ordered source manifest",
+    )
+    parser.add_argument(
+        "--core-target",
+        default="default",
+        help="FuseSoC target name used with --core-file",
     )
     parser.add_argument(
         "--repo-ref",
@@ -150,6 +160,11 @@ def apply_open_target_defaults(args: argparse.Namespace) -> argparse.Namespace:
         args.repo_ref = target.get("repo_ref", args.repo_ref)
     if not args.sparse_path:
         args.sparse_path = list(target.get("sparse_paths", []))
+    if not args.filelist and not args.core_file:
+        args.filelist = target.get("filelist", args.filelist)
+        args.core_file = target.get("core_file", args.core_file)
+    if args.core_target == "default":
+        args.core_target = target.get("core_target", args.core_target)
     return args
 
 
@@ -274,6 +289,157 @@ def parse_filelist(filelist_path: Path, root: Path, extensions: Iterable[str]) -
             seen.add(item)
             deduped.append(item)
     return deduped
+
+
+def _strip_inline_comment(value: str) -> str:
+    return value.split("#", 1)[0].rstrip()
+
+
+def _extract_list_scalar(value: str, *, allow_metadata: bool = False) -> str | None:
+    item = _strip_inline_comment(value).strip()
+    if not item:
+        return None
+    if allow_metadata and ":" in item and not item.startswith(("\"", "'")):
+        item = item.split(":", 1)[0].rstrip()
+    item = item.strip().strip('"').strip("'")
+    if not item:
+        return None
+    condition_match = re.search(r"([A-Za-z0-9_]+)\)?$", item)
+    return condition_match.group(1) if condition_match and ("?" in item or item.startswith("!")) else item
+
+
+def parse_fusesoc_core(core_path: Path) -> dict[str, Any]:
+    lines = core_path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    core: dict[str, Any] = {"name": None, "filesets": {}, "targets": {}}
+    section: str | None = None
+    current_name: str | None = None
+    current_list: str | None = None
+
+    for raw_line in lines:
+        if not raw_line.strip() or raw_line.lstrip().startswith("#") or raw_line.startswith("CAPI="):
+            continue
+        indent = len(raw_line) - len(raw_line.lstrip(" "))
+        line = raw_line.strip()
+
+        if indent == 0:
+            current_name = None
+            current_list = None
+            if line.startswith("name:"):
+                core["name"] = line.split(":", 1)[1].strip().strip('"')
+            elif line == "filesets:":
+                section = "filesets"
+            elif line == "targets:":
+                section = "targets"
+            else:
+                section = None
+            continue
+
+        if section == "filesets":
+            if indent == 2:
+                match = re.match(r"^([A-Za-z0-9_]+):", line)
+                if not match:
+                    continue
+                current_name = match.group(1)
+                core["filesets"][current_name] = {"files": [], "depend": []}
+                current_list = None
+                continue
+            if indent == 4 and current_name:
+                if line == "files:":
+                    current_list = "files"
+                elif line == "depend:":
+                    current_list = "depend"
+                else:
+                    current_list = None
+                continue
+            if indent >= 6 and current_name and current_list and line.startswith("- "):
+                item = _extract_list_scalar(line[2:], allow_metadata=(current_list == "files"))
+                if item:
+                    core["filesets"][current_name][current_list].append(item)
+                continue
+
+        if section == "targets":
+            if indent == 2:
+                match = re.match(r"^([A-Za-z0-9_]+):", line)
+                if not match:
+                    continue
+                current_name = match.group(1)
+                core["targets"][current_name] = {"filesets": []}
+                current_list = None
+                continue
+            if indent == 4 and current_name:
+                current_list = "filesets" if line == "filesets:" else None
+                continue
+            if indent >= 6 and current_name and current_list and line.startswith("- "):
+                item = _extract_list_scalar(line[2:])
+                if item:
+                    core["targets"][current_name][current_list].append(item)
+                continue
+
+    if not core["name"]:
+        raise RuntimeError(f"FUSESOC_CORE_NAME_MISSING: {core_path}")
+    return core
+
+
+def build_fusesoc_core_index(root: Path) -> dict[str, dict[str, Any]]:
+    index: dict[str, dict[str, Any]] = {}
+    for core_path in root.rglob("*.core"):
+        parsed = parse_fusesoc_core(core_path)
+        parsed["path"] = core_path.resolve()
+        index[parsed["name"]] = parsed
+    return index
+
+
+def resolve_fusesoc_dependency(index: dict[str, dict[str, Any]], dependency: str) -> dict[str, Any] | None:
+    exact = index.get(dependency)
+    if exact is not None:
+        return exact
+    prefix = f'{dependency}:'
+    matches = [core for name, core in index.items() if name.startswith(prefix)]
+    if len(matches) == 1:
+        return matches[0]
+    return None
+
+
+def collect_sources_from_core(core_path: Path, root: Path, extensions: Iterable[str], target_name: str) -> list[Path]:
+    normalized_exts = normalize_extensions(extensions)
+    index = build_fusesoc_core_index(root)
+    root_core = parse_fusesoc_core(core_path.resolve())
+    root_core["path"] = core_path.resolve()
+    index[root_core["name"]] = root_core
+    ordered: list[Path] = []
+    seen_files: set[Path] = set()
+    seen_cores: set[tuple[str, str]] = set()
+
+    def walk(core_name: str, selected_target: str) -> None:
+        key = (core_name, selected_target)
+        if key in seen_cores:
+            return
+        seen_cores.add(key)
+
+        core = resolve_fusesoc_dependency(index, core_name)
+        if core is None:
+            return
+
+        target = core["targets"].get(selected_target) or core["targets"].get("default")
+        if target is None:
+            return
+
+        for fileset_name in target.get("filesets", []):
+            fileset = core["filesets"].get(fileset_name)
+            if fileset is None:
+                continue
+            for dependency in fileset.get("depend", []):
+                walk(dependency, "default")
+            base_dir = core["path"].parent
+            for relative_path in fileset.get("files", []):
+                candidate = (base_dir / relative_path).resolve()
+                if candidate.suffix.lower() not in normalized_exts or not candidate.exists() or candidate in seen_files:
+                    continue
+                seen_files.add(candidate)
+                ordered.append(candidate)
+
+    walk(root_core["name"], target_name)
+    return ordered
 
 
 def relative_to_root(path: Path, root: Path) -> str:
@@ -439,6 +605,11 @@ def main() -> int:
     if args.filelist:
         filelist_path = Path(args.filelist)
         sources = parse_filelist(filelist_path, input_root, args.extensions)
+    elif args.core_file:
+        core_path = Path(args.core_file)
+        if not core_path.is_absolute():
+            core_path = input_root / core_path
+        sources = collect_sources_from_core(core_path.resolve(), input_root, args.extensions, args.core_target)
     else:
         sources = collect_sources(input_root, args.extensions, excluded_names)
 
@@ -453,7 +624,7 @@ def main() -> int:
         sources,
         repo_url,
         repo_ref,
-        args.filelist,
+        args.filelist or args.core_file,
     )
 
     print(f"MANIFEST_WRITTEN: {manifest_path}")

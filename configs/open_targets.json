@@ -19,6 +19,8 @@
         "hw/ip/uart",
         "hw/dv/sv"
       ],
+      "core_file": "hw/ip/uart/dv/uart_sim.core",
+      "core_target": "sim",
       "output_dir": "graph/graphify_outputs/opentitan_uart_dv"
     }
   ]

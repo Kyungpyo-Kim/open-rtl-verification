@@ -252,6 +252,9 @@ class RunGraphifyCliTest(unittest.TestCase):
             output_dir="graph/graphify_outputs/latest",
             repo_ref="HEAD",
             sparse_path=[],
+            filelist=None,
+            core_file=None,
+            core_target="default",
         )
 
         try:
@@ -263,6 +266,8 @@ class RunGraphifyCliTest(unittest.TestCase):
         self.assertEqual(updated.output_dir, "graph/graphify_outputs/opentitan_uart_dv")
         self.assertEqual(updated.repo_ref, "master")
         self.assertEqual(updated.sparse_path, ["hw/ip/uart", "hw/dv/sv"])
+        self.assertEqual(updated.core_file, "hw/ip/uart/dv/uart_sim.core")
+        self.assertEqual(updated.core_target, "sim")
 
     def test_apply_open_target_defaults_keeps_explicit_cli_overrides(self):
         spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
@@ -278,6 +283,9 @@ class RunGraphifyCliTest(unittest.TestCase):
             output_dir="graph/graphify_outputs/custom_target",
             repo_ref="feature-branch",
             sparse_path=["custom/path"],
+            filelist="custom.f",
+            core_file="custom.core",
+            core_target="lint",
         )
 
         try:
@@ -289,6 +297,43 @@ class RunGraphifyCliTest(unittest.TestCase):
         self.assertEqual(updated.output_dir, "graph/graphify_outputs/custom_target")
         self.assertEqual(updated.repo_ref, "feature-branch")
         self.assertEqual(updated.sparse_path, ["custom/path"])
+        self.assertEqual(updated.filelist, "custom.f")
+        self.assertEqual(updated.core_file, "custom.core")
+        self.assertEqual(updated.core_target, "lint")
+
+    def test_collect_sources_from_core_resolves_target_filesets_and_local_dependencies(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            dep_dir = root / "dep"
+            top_dir = root / "top"
+            dep_dir.mkdir()
+            top_dir.mkdir()
+
+            (dep_dir / "dep_pkg.sv").write_text("package dep_pkg; endpackage\n", encoding="utf-8")
+            (top_dir / "tb.sv").write_text("module tb; endmodule\n", encoding="utf-8")
+
+            (dep_dir / "dep.core").write_text(
+                """CAPI=2:\nname: \"acme:dv:dep:0.1\"\nfilesets:\n  files_dv:\n    files:\n      - dep_pkg.sv\n    file_type: systemVerilogSource\ntargets:\n  default:\n    filesets:\n      - files_dv\n""",
+                encoding="utf-8",
+            )
+            (top_dir / "top.core").write_text(
+                """CAPI=2:\nname: \"acme:dv:top:0.1\"\nfilesets:\n  files_dv:\n    depend:\n      - acme:dv:dep:0.1\n    files:\n      - tb.sv\n    file_type: systemVerilogSource\ntargets:\n  sim:\n    filesets:\n      - files_dv\n""",
+                encoding="utf-8",
+            )
+
+            try:
+                sources = run_graphify.collect_sources_from_core(top_dir / "top.core", root, [".sv"], "sim")
+            finally:
+                sys.modules.pop("run_graphify", None)
+
+        self.assertEqual([path.name for path in sources], ["dep_pkg.sv", "tb.sv"])
 
     def test_open_target_config_entries_are_unique_and_complete(self):
         config = json.loads((REPO_ROOT / "configs" / "open_targets.json").read_text(encoding="utf-8"))
