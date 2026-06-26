@@ -132,10 +132,10 @@ These are intentionally **not** part of the finished stabilization checklist abo
 - [x] Add function/task call extraction for helper-heavy RTL like `ibex_tracer`
 - [x] Add package-qualified symbol/type-use extraction
 - [x] Add signal connectivity edges such as instance port bindings and simple `assign` dependencies
-- [ ] Add UVM-specific adapters using the same confidence and validation framework
+- [x] Add basic UVM-specific adapters using the same confidence and validation framework
 - [ ] Split future graph views by confidence tier so exploratory edges do not pollute structural graphs
 
-Function/task call extraction, package-qualified symbol usage extraction, and the first signal-connectivity pass are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, `ibex_pkg::...` symbol usage without import noise, named and positional instance port bindings, simple `assign` dependencies, and condition-gated procedural dependencies.
+Function/task call extraction, package-qualified symbol usage extraction, the first signal-connectivity pass, and the early UVM-adapter pass are now covered by the repository test suite in `tests/test_graphify_verilog_calls.py`, which checks local helper-function calls, task-to-function calls, parameterized-call handling, `ibex_pkg::...` symbol usage without import noise, named and positional instance port bindings, simple `assign` dependencies, condition-gated procedural dependencies, plus `uvm_config_db` access, TLM `connect`, `sequence.start`, and `run_test` flows.
 
 ## Recommended Next Step
 
@@ -146,5 +146,6 @@ The next highest-value extractor task is now:
 Why:
 
 - the first pass now covers named and positional instance port bindings, simple `assign` dependencies, and basic procedural assignments
+- early UVM adapters now cover core verification-structure hints, so the bigger remaining information gap is richer dataflow extraction
 - broader procedural/dataflow coverage still matters for real verification context, especially condition-gated updates and more complex expressions
 - the same precision-first validation approach should keep exploratory connectivity from polluting the structural graph

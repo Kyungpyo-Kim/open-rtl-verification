@@ -1,5 +1,7 @@
+import argparse
 import importlib.util
 import json
+import networkx as nx
 from unittest import mock
 import subprocess
 import sys
@@ -130,6 +132,43 @@ class RunGraphifyCliTest(unittest.TestCase):
             self.assertEqual(manifest["relative_sources"], ["rtl/core.sv", "tb/core_tb.sv"])
             self.assertEqual(manifest["filelist"], "top.f")
 
+    def test_manifest_only_honors_nested_filelists_with_tab_whitespace(self):
+        with tempfile.TemporaryDirectory() as td:
+            temp_root = Path(td)
+            source_dir = temp_root / "uvm"
+            source_dir.mkdir()
+
+            (source_dir / "rtl").mkdir()
+            (source_dir / "tb").mkdir()
+            (source_dir / "rtl" / "core.sv").write_text("module core; endmodule\n", encoding="utf-8")
+            (source_dir / "tb" / "core_tb.sv").write_text("module core_tb; endmodule\n", encoding="utf-8")
+            (source_dir / "nested.f").write_text("tb/core_tb.sv\n", encoding="utf-8")
+            (source_dir / "top.f").write_text("rtl/core.sv\n-F\tnested.f\n", encoding="utf-8")
+
+            output_dir = temp_root / "uvm_manifest"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    str(source_dir),
+                    "--filelist",
+                    "top.f",
+                    "--manifest-only",
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            manifest = json.loads((output_dir / "sources.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["source_count"], 2)
+            self.assertEqual(manifest["relative_sources"], ["rtl/core.sv", "tb/core_tb.sv"])
+            self.assertEqual(manifest["filelist"], "top.f")
+
     def test_manifest_only_stages_git_repo_and_honors_sparse_checkout(self):
         with tempfile.TemporaryDirectory() as td:
             temp_root = Path(td)
@@ -199,6 +238,122 @@ class RunGraphifyCliTest(unittest.TestCase):
             self.assertEqual(manifest["repo_ref"], "master")
             self.assertTrue(all(path.startswith("rtl/") for path in manifest["relative_sources"]))
 
+    def test_apply_open_target_defaults_uses_opentitan_preset_values(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        args = argparse.Namespace(
+            input=None,
+            target="opentitan_uart_dv",
+            output_dir="graph/graphify_outputs/latest",
+            repo_ref="HEAD",
+            sparse_path=[],
+            filelist=None,
+            core_file=None,
+            core_target="default",
+        )
+
+        try:
+            updated = run_graphify.apply_open_target_defaults(args)
+        finally:
+            sys.modules.pop("run_graphify", None)
+
+        self.assertEqual(updated.input, "https://github.com/lowRISC/opentitan.git")
+        self.assertEqual(updated.output_dir, "graph/graphify_outputs/opentitan_uart_dv")
+        self.assertEqual(updated.repo_ref, "master")
+        self.assertEqual(updated.sparse_path, ["hw/ip/uart", "hw/dv/sv"])
+        self.assertEqual(updated.core_file, "hw/ip/uart/dv/uart_sim.core")
+        self.assertEqual(updated.core_target, "sim")
+
+    def test_apply_open_target_defaults_keeps_explicit_cli_overrides(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        args = argparse.Namespace(
+            input="examples/uvm_tb",
+            target="opentitan_uart_dv",
+            output_dir="graph/graphify_outputs/custom_target",
+            repo_ref="feature-branch",
+            sparse_path=["custom/path"],
+            filelist="custom.f",
+            core_file="custom.core",
+            core_target="lint",
+        )
+
+        try:
+            updated = run_graphify.apply_open_target_defaults(args)
+        finally:
+            sys.modules.pop("run_graphify", None)
+
+        self.assertEqual(updated.input, "examples/uvm_tb")
+        self.assertEqual(updated.output_dir, "graph/graphify_outputs/custom_target")
+        self.assertEqual(updated.repo_ref, "feature-branch")
+        self.assertEqual(updated.sparse_path, ["custom/path"])
+        self.assertEqual(updated.filelist, "custom.f")
+        self.assertEqual(updated.core_file, "custom.core")
+        self.assertEqual(updated.core_target, "lint")
+
+    def test_collect_sources_from_core_resolves_target_filesets_and_local_dependencies(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            dep_dir = root / "dep"
+            top_dir = root / "top"
+            dep_dir.mkdir()
+            top_dir.mkdir()
+
+            (dep_dir / "dep_pkg.sv").write_text("package dep_pkg; endpackage\n", encoding="utf-8")
+            (top_dir / "tb.sv").write_text("module tb; endmodule\n", encoding="utf-8")
+
+            (dep_dir / "dep.core").write_text(
+                """CAPI=2:\nname: \"acme:dv:dep:0.1\"\nfilesets:\n  files_dv:\n    files:\n      - dep_pkg.sv\n    file_type: systemVerilogSource\ntargets:\n  default:\n    filesets:\n      - files_dv\n""",
+                encoding="utf-8",
+            )
+            (top_dir / "top.core").write_text(
+                """CAPI=2:\nname: \"acme:dv:top:0.1\"\nfilesets:\n  files_dv:\n    depend:\n      - acme:dv:dep:0.1\n    files:\n      - tb.sv\n    file_type: systemVerilogSource\ntargets:\n  sim:\n    filesets:\n      - files_dv\n""",
+                encoding="utf-8",
+            )
+
+            try:
+                sources = run_graphify.collect_sources_from_core(top_dir / "top.core", root, [".sv"], "sim")
+            finally:
+                sys.modules.pop("run_graphify", None)
+
+        self.assertEqual([path.name for path in sources], ["dep_pkg.sv", "tb.sv"])
+
+    def test_open_target_config_entries_are_unique_and_complete(self):
+        config = json.loads((REPO_ROOT / "configs" / "open_targets.json").read_text(encoding="utf-8"))
+        targets = config["targets"]
+
+        self.assertGreaterEqual(len(targets), 1)
+
+        names = [target["name"] for target in targets]
+        self.assertEqual(len(names), len(set(names)))
+
+        for target in targets:
+            self.assertTrue(target["name"])
+            self.assertTrue(target["description"])
+            self.assertTrue(target["repo_url"].startswith("https://github.com/"))
+            self.assertTrue(target["repo_ref"])
+            self.assertTrue(target["output_dir"].startswith("graph/graphify_outputs/"))
+            self.assertIsInstance(target["sparse_paths"], list)
+            self.assertGreaterEqual(len(target["sparse_paths"]), 1)
+            self.assertTrue(all(path and not path.startswith("/") for path in target["sparse_paths"]))
+
     def test_cli_reports_unknown_open_target(self):
         completed = subprocess.run(
             [
@@ -266,6 +421,32 @@ class RunGraphifyCliTest(unittest.TestCase):
                 ],
                 check=False,
             )
+
+    def test_filter_graph_by_confidence_view_keeps_only_extracted_edges(self):
+        spec = importlib.util.spec_from_file_location("run_graphify", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        run_graphify = importlib.util.module_from_spec(spec)
+        sys.modules["run_graphify"] = run_graphify
+        spec.loader.exec_module(run_graphify)
+
+        graph = nx.DiGraph()
+        graph.add_node("keep")
+        graph.add_node("keep_target")
+        graph.add_node("drop")
+        graph.add_node("drop_target")
+        graph.add_edge("keep", "keep_target", confidence="EXTRACTED")
+        graph.add_edge("drop", "drop_target", confidence="INFERRED")
+
+        try:
+            filtered = run_graphify.filter_graph_by_confidence_view(graph, "extracted")
+        finally:
+            sys.modules.pop("run_graphify", None)
+
+        self.assertTrue(filtered.has_edge("keep", "keep_target"))
+        self.assertFalse(filtered.has_edge("drop", "drop_target"))
+        self.assertNotIn("drop", filtered.nodes)
+        self.assertNotIn("drop_target", filtered.nodes)
 
 
 if __name__ == "__main__":
